@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                            <div class="spacer_30"></div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-9 marginAuto">
+                    <div class="header-title-breadcrumb element-box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                    <h3>Exchange</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-section1">
+                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                            <div class="panel-body">
+                                <% if(error && error.length > 0){ %>
+                                    <div class="alert alert-danger" style="margin:0px 10px;">
+                                        <%= error %>
+                                    </div>
+                                        <% } else if(success && success.length > 0 ){ %>
+                                    <div class="alert alert-success" style="margin:0px 10px;">
+                                        <%= success %>
+                                    </div>
+                                <% } %>         
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                        <div class="panel-heading">
+                                            <h3 class="no-margin">Exchange Bitcoin for BlockVest!</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div id="btcico_error" class="error-message"></div>
+                                            <div id="btcico_success" class="success-message"></div>
+                                            <div class="form-group col-lg-12">
+                                                <span>Address : </span>
+                                                <span><%= userinfo.btcAddress %></span>
+                                                <input id="btc_addr" type="hidden" value="<%= userinfo.btcAddress %>">
+                                                <a id="copy_btc_addr"><i class="fa fa-fw fa-copy"></i></a>
+                                            </div>
+                                            <form>
+                                                <input id="btcico_coin_price" type="hidden">
+                                                <input id="btcico_price" type="hidden">
+                                                <div class="form-group">
+                                                    <label>Bitcoin amount</label>
+                                                    <input id="btcico_btc_amount" class="form-control input-type-1" name="amount"  type="number" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Blockvest amount</label>
+                                                    <input id="btcico_blv_amount" class="form-control input-type-1" name="blv_amount"  type="number" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Bitcoin Transaction ID</label>
+                                                    <input id="btcico_txid" class="form-control input-type-1" name="txid"  type="text" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>2FA token</label>
+                                                    <input id="btcico_token" class="form-control input-type-1" name="token"  type="text" required>
+                                                </div>
+                                            </form>
+                                            <div class="text-center margin-bottom">
+                                                <a class="btn btn-blue" data-toggle="modal" data-target="#btc_QRcode_dlg">Show QR Code</a><br/>
+                                                <% if(userinfo.secret == "") { %> 
+                                                    <button id="btn_btc_ico" class="btn btn-blue" disabled>Complete ICO</button>
+                                                <% } else{ %>
+                                                    <button id="btn_btc_ico" class="btn btn-blue">Complete ICO</button>
+                                                <% } %>
+                                            </div>
+                                        </div><!-- END panel-body -->
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div id="btc_QRcode_dlg" class="modal fade" role="dialog">
+                                    <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                        <!-- Modal content-->
+                                        <div class="modal-content" style="border-radius:6px;">
+                                            <div class="modal-title">
+                                                <span>You're almost there!<br>Sending instructions below.</span>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <div class="clearfix seperate-line"></div>
+                                            </div>
+                                            <!-- <div class="modal-body"> -->
+                                                <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                    <form>
+                                                        <div class="form-group" style="text-align: center;">
+                                                            <label>Bitcoin Address</label><br>
+                                                            <img src="<%= btc_qrcode_url %>"/>
+                                                            <label style="font-size: 12px;"><%= userinfo.btcAddress %></label>
+                                                        </div>
+                                                        <div style="text-align:right;padding:10px 20px;">
+                                                            <input class="btn-green" type="button" value="Close" data-dismiss="modal">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            <!-- </div> -->
+                                        </div>
+                                        <!-- Modal content-->
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                                
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                        <div class="panel-heading">
+                                                <h3 class="no-margin">Exchange ETH for BlockVest!</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div id="ethico_error" class="error-message"></div>
+                                            <div id="ethico_success" class="success-message"></div>
+                                            <div class="form-group col-lg-12">
+                                                <span>Address : </span>
+                                                <span><%= userinfo.eoaAddress %></span>
+                                                <input id="eth_addr" type="hidden" value="<%= userinfo.eoaAddress %>">
+                                                <a id="copy_eth_addr"><i class="fa fa-fw fa-copy"></i></a>
+                                            </div>
+                                            <form>
+                                                <input id="ethico_coin_price" type="hidden">
+                                                <input id="ethico_price" type="hidden">
+                                                <div class="form-group">
+                                                    <label>Ethereum amount</label>
+                                                    <input id="ethico_eth_amount" class="form-control input-type-1" name="amount"  type="number" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Blockvest amount</label>
+                                                    <input id="ethico_blv_amount" class="form-control input-type-1" name="blv_amount"  type="number" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ethereum Transaction ID</label>
+                                                    <input id="ethico_txid" class="form-control input-type-1" name="txid"  type="text" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>2FA token</label>
+                                                    <input id="ethico_token" class="form-control input-type-1" name="token"  type="text" required>
+                                                </div>
+                                            </form>
+                                            <div style="text-align:center">
+                                                <a class="btn btn-blue" data-toggle="modal" data-target="#eth_QRcode_dlg">Show QR Code</a>
+                                                <% if(userinfo.secret == "") { %> 
+                                                    <button id="btn_eth_ico" class="btn btn-blue" disabled>Complete ICO</button>
+                                                <% } else { %>
+                                                    <button id="btn_eth_ico" class="btn btn-blue">Complete ICO</button>
+                                                <% } %>
+                                            </div>
+                                                                                    
+                                        </div><!-- END panel-body -->
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div id="eth_QRcode_dlg" class="modal fade" role="dialog">
+                                    <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                        <!-- Modal content-->
+                                        <div class="modal-content" style="border-radius:6px;">
+                                            <div class="modal-title">
+                                                <span>You're almost there!<br>Sending instructions below.</span>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <div class="clearfix seperate-line"></div>
+                                            </div>
+                                            <!-- <div class="modal-body"> -->
+                                                <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                    <form>
+                                                        <div class="form-group" style="text-align: center;">
+                                                            <label>Ethereum Address</label><br>
+                                                            <img src="<%= eth_qrcode_url %>"/>
+                                                            <label style="font-size: 12px;"><%= userinfo.eoaAddress %></label>
+                                                        </div>
+                                                        <div style="text-align:right;padding:10px 20px;">
+                                                            <input class="btn-green" type="button" value="Close" data-dismiss="modal">
+                                                        </div>
+                                                </form>
+                                                <!-- </div> -->
+                                                    
+                                            </div>
+                                        </div>
+                                        <!-- Modal content-->
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                             
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <!-- PAGE FOOTER -->
+                
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+    <script>
+        $('#btn_btc_ico').click(function(){
+            var btc = $('#btcico_btc_amount').val();
+            var blv = $('#btcico_blv_amount').val();
+            var txid = $('#btcico_txid').val().trim();
+            var token = $('#btcico_token').val();
+            var username = '<%= userinfo.username %>';
+            
+
+            if(txid == "" || token == "" || btc == "" || blv == ""){
+                showMessage("btcico", 0, "Please fill all fields.");
+                return;
+            }
+            if(parseFloat(blv) * blvusdRate < 25){
+                showMessage("btcico", 0, "Please purchase more than 25$.");
+                return;
+            }
+
+            if(parseFloat(blv) * blvusdRate > 250000){
+                showMessage("btcico", 0, "Please purchase less than 250,000$.");
+                return;
+            }
+
+            $('#btcico_token').val('');
+            var ajax_url = "/bitcoinICOfromTxID"
+            $.post(
+                ajax_url,
+                {
+                    btc: btc,
+                    blv: blv,
+                    txid: txid,
+                    token: token,
+                    username: username,
+                    coin_price: $('#btcico_coin_price').val(),
+                    price: $('#btcico_price').val()
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("btcico", 1, res.message);
+                    }else{
+                        showMessage("btcico", 0, res.message);
+
+                    }
+                }
+            );
+        });
+        
+        $('#btn_eth_ico').click(function(){
+            var eth = $('#ethico_eth_amount').val();
+            var blv = $('#ethico_blv_amount').val();
+            var txid = $('#ethico_txid').val().trim();
+            var token = $('#ethico_token').val();
+            var username = '<%= userinfo.username %>';
+
+            if(txid == "" || token == "" || eth == "" || blv == ""){
+                showMessage("ethico", 0, "Please fill all fields.");
+                return;
+            }
+            if(parseFloat(blv) * blvusdRate < 25){
+                showMessage("ethico", 0, "Please purchase more than 25$.");
+                return;
+            }
+
+            if(parseFloat(blv) * blvusdRate > 250000){
+                showMessage("ethico", 0, "Please purchase less than 250,000$.");
+                return;
+            }
+
+            $('#ethico_token').val('');
+            var ajax_url = "/ethereumICOfromTxID"
+            $.post(
+                ajax_url,
+                {
+                    eth: eth,
+                    blv: blv,
+                    txid: txid,
+                    token: token,
+                    username: username,
+                    coin_price: $('#ethico_coin_price').val(),
+                    price: $('#ethico_price').val()
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("ethico", 1, res.message);
+                    }else{
+                        showMessage("ethico", 0, res.message);
+                    }
+                }
+            );
+        });
+
+        $('#btcico_btc_amount').bind('input change paste keyup mouseup' , function(){
+            var btc = parseFloat($('#btcico_btc_amount').val());
+            var blv = btc * btcusdRate / blvusdRate;
+            blv = parseInt(blv * 10);
+            blv = blv/10;
+
+            $('#btcico_coin_price').val(btcusdRate);
+            $('#btcico_price').val(blvusdRate);            
+
+            if(blv *blvusdRate < 25){
+                showMessage("btcico", 0, "Should purchase more than 25$.");
+                $('#btcico_txid').val('');
+                $('#btcico_txid').attr('readOnly', '');
+            }else if(blv *blvusdRate > 250000){
+                showMessage("btcico", 0, "Should purchase less than 250,000$.");
+                $('#btcico_txid').val('');
+                $('#btcico_txid').attr('readOnly', '');
+            }else{
+                showMessage("btcico", 0, "");
+                $('#btcico_txid').removeAttr('readOnly');
+            }
+
+            $('#btcico_blv_amount').val(blv.toFixed(8));
+        });
+
+        $('#btcico_blv_amount').bind('input change paste keyup mouseup' ,function(){
+            var blv = parseFloat($('#btcico_blv_amount').val());
+            blv = parseInt(blv * 10);
+            blv = blv/10;
+            $('#btcico_blv_amount').val(blv);
+
+            var btc = blv * blvusdRate / btcusdRate;
+            btc = Math.ceil(btc*100000000);
+            btc = btc/100000000;
+            $('#btcico_coin_price').val(btcusdRate);
+            $('#btcico_price').val(blvusdRate);            
+
+            if(blv*blvusdRate < 25){
+                showMessage("btcico", 0, "Should purchase more than 25$.");
+                $('#btcico_txid').val('');
+                $('#btcico_txid').attr('readOnly', '');
+            }else if(blv*blvusdRate > 250000){
+                showMessage("btcico", 0, "Should purchase less than 250,000$.");
+                $('#btcico_txid').val('');
+                $('#btcico_txid').attr('readOnly', '');
+            }else{
+                showMessage("btcico", 0, "");
+                $('#btcico_txid').removeAttr('readOnly');
+            }
+
+            $('#btcico_btc_amount').val(btc.toFixed(8));
+        });
+
+        $('#ethico_eth_amount').bind('input change paste keyup mouseup' ,function(){
+            var eth = parseFloat($('#ethico_eth_amount').val());
+            var blv = eth * ethusdRate / blvusdRate;
+            blv = parseInt(blv * 10);
+            blv = blv/10;
+            $('#ethico_coin_price').val(ethusdRate);
+            $('#ethico_price').val(blvusdRate);            
+
+            if(blv*blvusdRate < 25){
+                showMessage("ethico", 0, "Should purchase more than 25$.");
+                $('#ethico_txid').val('');
+                $('#ethico_txid').attr('readOnly', '');
+            }else if(blv*blvusdRate > 250000){
+                showMessage("ethico", 0, "Should purchase less than 250,000$.");
+                $('#ethico_txid').val('');
+                $('#ethico_txid').attr('readOnly', '');
+            }else{
+                showMessage("ethico", 0, "");
+                $('#ethico_txid').removeAttr('readOnly');
+            }
+           
+            $('#ethico_blv_amount').val(blv.toFixed(8));
+        });
+
+        $('#ethico_blv_amount').bind('input change paste keyup mouseup' ,function(){
+            var blv = parseFloat($('#ethico_blv_amount').val());
+            blv = parseInt(blv * 10);
+            blv = blv/10;
+            $('#btcico_blv_amount').val(blv);
+            var eth = blv * blvusdRate / ethusdRate;
+            $('#ethico_coin_price').val(ethusdRate);
+            $('#ethico_price').val(blvusdRate);
+            eth = Math.ceil(eth*100000000);
+            eth = eth/100000000;            
+
+            if(blv*blvusdRate < 25){
+                showMessage("ethico", 0, "Should purchase more than 25$.");
+                $('#ethico_txid').val('');
+                $('#ethico_txid').attr('readOnly', '');
+            }else if(blv*blvusdRate > 250000){
+                showMessage("ethico", 0, "Should purchase less than 250,000$.");
+                $('#ethico_txid').val('');
+                $('#ethico_txid').attr('readOnly', '');
+            }else{
+                showMessage("ethico", 0, "");
+                $('#ethico_txid').removeAttr('readOnly');
+            }
+
+            $('#ethico_eth_amount').val(eth.toFixed(8));
+        });
+
+
+        $('#copy_btc_addr').click(function(){
+            /* Get the text field */
+            var copyText = document.getElementById("btc_addr");
+
+            copyTextToClipboard(copyText.value);
+        });
+        $('#copy_eth_addr').click(function(){
+            /* Get the text field */
+            var copyText = document.getElementById("eth_addr");
+
+            copyTextToClipboard(copyText.value);
+        });
+
+        function showMessage(part, type, message){
+            if(type==1){
+                $('#' + part + '_success').html(message);
+                $('#' + part + '_error').html("");
+            }else{
+                $('#' + part + '_error').html(message);
+                $('#' + part + '_success').html("");
+            }
+
+            setTimeout(function(){
+                $('#' + part + '_success').html("");
+                $('#' + part + '_error').html("");
+            }, 20000);
+        }
+
+    </script>
+</body>
+</html>

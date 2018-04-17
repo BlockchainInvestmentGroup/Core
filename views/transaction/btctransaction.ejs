@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                    <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                        <div class="background-opacity">
+                        <div class="spacer_30"></div>
+                        <div class="clearfix"></div>
+                        <div class="padding-30lr col-md-12">
+                        <div class="header-title-breadcrumb element-box-shadow">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                      <h3>Bitcoin Transactions</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-section1">
+                            <div class="panel panel-default table-market-capitalization">
+                                <div class="panel-heading">
+                                    <h3 class="no-margin text-center">Receive transactions</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-cryptic dataTable no-footer" id="receive_transaction_tbl" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="min-width: 21px;">No</th>
+                                                <th class="text-center">Transaction Id <i class="fa fa-sort"></i></th>
+                                                <th class="text-center">from <i class="fa fa-sort"></i></th>
+                                                <th class="text-center">to <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Amount <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Date and time <i class="fa fa-sort-amount-desc"></i></th>
+                                                <% if(role = "SuperAdmin"){ %>
+                                                    <th class="text-right">Performer <i class="fa fa-sort"></i></th>
+                                                <% } %>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for( var i =0; i < receive_trans.length; i++){ %>
+                                                <tr role="row">
+                                                    <td><%= i+1 %></td>
+                                                    <td class="text-right"><a href="https://live.blockcypher.com/btc/tx/<%= receive_trans[i].txHash %>" target="_blank"><%= receive_trans[i].txHash %></a></td>
+                                                    <td class="text-right"><%= receive_trans[i].from %></td>
+                                                    <td class="text-right"><%= receive_trans[i].to %></td>
+                                                    <td class="text-right"><%= receive_trans[i].Amount.toFixed(8) %></td>
+                                                    <td class="text-right"><%= receive_trans[i].create_date.toLocaleString() %></td>
+                                                    <% if(role = "SuperAdmin"){ %>
+                                                        <td class="text-right"><%= receive_trans[i].performer %></td>
+                                                    <% } %>
+                                                </tr>
+            
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-section1">
+                            <div class="panel panel-default table-market-capitalization">
+                            <div class="panel-heading">
+                                <h3 class="no-margin text-center">Send transactions</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-cryptic dataTable no-footer" id="send_transaction_tbl" role="grid">
+                                    <thead>
+                                        <tr role="row">   
+                                            <th style="min-width: 21px;">No</th>
+                                            <th class="text-center">Transaction Id <i class="fa fa-sort"></i></th>
+                                            <th class="text-center">from <i class="fa fa-sort"></i></th>
+                                            <th class="text-center">to <i class="fa fa-sort"></i></th>
+                                            <th class="text-right">Amount <i class="fa fa-sort"></i></th>
+                                            <th class="text-right">Date and time <i class="fa fa-sort-amount-desc"></i></th>
+                                            <% if(role = "SuperAdmin"){ %>
+                                                <th class="text-right">Performer <i class="fa fa-sort"></i></th>
+                                            <% } %>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( var i =0; i < send_trans.length; i++){ %>
+                                            <tr role="row">
+                                                <td><%= i+1 %></td>
+                                                <td class="text-right"><a href="https://live.blockcypher.com/btc/tx/<%= send_trans[i].txHash %>" target="_blank"><%= send_trans[i].txHash %></a></td>
+                                                <td class="text-right"><%= send_trans[i].from %></td>
+                                                <td class="text-right"><%= send_trans[i].to %></td>
+                                                <td class="text-right"><%= send_trans[i].Amount.toFixed(8) %></td>
+                                                <td class="text-right"><%= send_trans[i].create_date.toLocaleString() %></td>
+                                                <% if(role = "SuperAdmin"){ %>
+                                                    <td class="text-right"><%= send_trans[i].performer %></td>
+                                                <% } %>
+                                            </tr>
+        
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>  
+                    </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <div class="spacer_30"></div>
+                <!-- PAGE FOOTER -->
+                <footer>
+                    <div class="pull-right"></div>
+                    <div class="clearfix"></div>
+                </footer>
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+    <script>
+        jQuery('#receive_transaction_tbl').DataTable( {
+            "pageLength": 20
+        } );
+
+        jQuery('#send_transaction_tbl').DataTable( {
+            "pageLength": 20
+        } );
+    </script>
+</body>
+</html>

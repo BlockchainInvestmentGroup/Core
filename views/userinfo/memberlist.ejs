@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+    <style>
+        td a {
+            border: 1px solid;
+            border-radius: 5px;
+        }
+    </style>    
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                    <div class="spacer_30"></div>
+                    <div class="clearfix"></div>
+                    <div class="padding-30lr col-md-12">
+                    <!-- <div class="header-title-breadcrumb element-box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                    <h3>Members</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    
+                    <div class="chart-section1">
+                        <div class="panel panel-default table-market-capitalization">
+                                <div class="panel-heading">
+                                        <h3 class="no-margin text-center">Members</h3>
+                                    </div>
+                        <div class="panel-body">
+                            <table class="table table-cryptic dataTable no-footer" id="blv_transaction_tbl" role="grid">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-right" style="min-width:50px;">No <i class="fa fa-sort"></i></th>
+                                        <th class="text-right" style="min-width:90px;">Username <i class="fa fa-sort-amount-desc"></i></th>
+                                        <th class="text-center" style="min-width:150px;">Email</i></th>
+                                        <th class="text-right" style="min-width:90px;">Residence <i class="fa fa-sort"></i></th>
+                                        <th class="text-right" style="min-width:90px;">Citizenship <i class="fa fa-sort"></i></th>
+                                        <th class="text-center" style="min-width:250px;">Address <i class="fa fa-sort"></i></th>
+                                        <th class="text-right" style="min-width:110px;">Personal Info <i class="fa fa-sort"></i></th>
+                                        <th class="text-right" style="min-width:110px;">Account Type <i class="fa fa-sort"></i></th>
+                                        <th class="text-right" style="min-width:70px;">Activate <i class="fa fa-sort"></i></th>
+                                        <th class="text-right" style="min-width:50px;">Lock<i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for( var i = 0; i < users.length; i++){ %>
+                                        <tr role="row">
+                                            <td class="text-right"><%= i+1 %></td>
+                                            <td class="text-right"><%= users[i].username %></td>
+                                            <td class="text-right"><%= users[i].email %></td>
+
+                                          
+
+                                            <td class="no-wrap text-right"><%= users[i].residence %></td>
+                                            <td class="no-wrap text-right"><%= users[i].citizenship %></td>
+                                            
+                                            <%
+                                                var address = users[i].street + " " + users[i].city + " " + users[i].state + " " + users[i].post_code; 
+                                                address = address.replace("undefined", "");
+                                            %>
+                                            <td class="text-right"><%= address %></td>
+
+                                            <% if( users[i].info != undefined && users[i].info != ""){ %>
+                                                <td class="no-wrap text-right"><a>Download</a></td>
+                                            <% } else { %>
+                                                <td class="no-wrap text-right"></td>
+                                            <% } %>
+
+                                            <% if(users[i].account_type == 1){ %>
+                                                <td class="text-right"><a id="account_type_<%= users[i]._id %>" onclick="setAccountType('<%= users[i]._id %>',0)">Customer</a></td>
+                                            <% } else { %>
+                                                <td class="text-right"><a id="account_type_<%= users[i]._id %>" onclick="setAccountType('<%= users[i]._id %>',1)">Administrator</a></td>
+                                            <% } %>
+
+                                            <% if(users[i].active){ %>
+                                                <td class="no-wrap text-right"><a id="account_activate_<%= users[i]._id %>" onclick="setActivate('<%= users[i]._id %>',false)">Inactivate</a></td>
+                                            <% } else { %>
+                                                <td class="no-wrap text-right"><a id="account_activate_<%= users[i]._id %>" onclick="setActivate('<%= users[i]._id %>',true)">Activate</a></td>
+                                            <% } %>
+
+                                            <% if(users[i].account_lock){ %>
+                                                <td class="no-wrap text-right"><a id="account_lock_<%= users[i]._id %>" onclick="setLock('<%= users[i]._id %>',false)">Unlock</a></td>
+                                            <% } else { %>
+                                                <td class="no-wrap text-right"><a id="account_lock_<%= users[i]._id %>" onclick="setLock('<%= users[i]._id %>',true)">Lock</a></td>
+                                            <% } %>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <div class="spacer_30"></div>
+                <!-- PAGE FOOTER -->
+                <footer>
+                    <div class="pull-right"></div>
+                    <div class="clearfix"></div>
+                </footer>
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+
+    <script>
+        function setAccountType(userid, type){
+            var ajax_url = "/setAccountType";
+            $.post(
+                ajax_url,
+                {
+                    userid: userid,
+                    type: type
+                },
+                function(res){
+                    if(res.status == "success"){
+                        if(type == 0){
+                            $('#account_type_' + userid).text("Administrator");
+                            $('#account_type_' + userid).attr('onclick', "setAccountType('" + userid + "', 1)");
+                        }else{
+                            $('#account_type_' + userid).text("Customer");
+                            $('#account_type_' + userid).attr('onclick', "setAccountType('" + userid + "', 0)");
+                        }
+                    }else{
+                        alert(res.messsage);
+                    }
+                }
+            );
+        }
+
+        function setLock(userid, status){
+            var ajax_url = "/setAccountLock";
+            $.post(
+                ajax_url,
+                {
+                    userid: userid,
+                    status: status
+                },
+                function(res){
+                    if(res.status == "success"){
+                        if(status == true){
+                            $('#account_lock_' + userid).text("Unlock");
+                            $('#account_lock_' + userid).attr('onclick', "setLock('" + userid + "', false)");
+                        }else{
+                            $('#account_lock_' + userid).text("Lock");
+                            $('#account_lock_' + userid).attr('onclick', "setLock('" + userid + "', true)");
+                        }
+                    }else{
+                        alert(res.messsage);
+                    }
+                }
+            );
+        }
+
+        function setActivate(userid, status){
+            var ajax_url = "/setActivate";
+            $.post(
+                ajax_url,
+                {
+                    userid: userid,
+                    status: status
+                },
+                function(res){
+                    if(res.status == "success"){
+                        if(status == true){
+                            $('#account_activate_' + userid).text("Inactivate");
+                            $('#account_activate_' + userid).attr('onclick', "setActivate('" + userid + "', false)");
+                        }else{
+                            $('#account_activate_' + userid).text("Activate");
+                            $('#account_activate_' + userid).attr('onclick', "setActivate('" + userid + "', true)");
+                        }
+                    }else{
+                        alert(res.messsage);
+                    }
+                }
+            );
+        }
+        jQuery('#blv_transaction_tbl').DataTable( {
+            "pageLength": 20
+        } );
+    
+    </script>
+
+</body>
+</html>

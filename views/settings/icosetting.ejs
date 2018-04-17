@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .form-control-event{
+            margin-right: 55px;
+            padding: 10px;
+        }
+        td input{
+            width: 100%;
+        }
+        td button{
+            /* width: 100%; */
+            width: 70px;
+        }
+        table#icolist td {
+            min-width: 90px;
+        }
+        #datepicker_ico{
+            cursor: pointer;
+        }
+    </style>
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                            <div class="spacer_30"></div>
+                            <div class="clearfix"></div>
+                            <div class="padding-30lr col-md-12">
+                    <!-- <div class="header-title-breadcrumb element-box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                    <h3>ICO Settings</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="">
+                       <div class="panel panel-warning panel-cryptic element-box-shadow">
+                            <div class="panel-heading">
+                                    <h3 class="no-margin text-center">ICO Settings</h3>
+                                </div>
+                           <div style="padding: 30px; background:white;">
+                                <% if(common != null && common.ico_activation){ %>
+                                    <button id="ico_stop" class="btn btn-blue"  data-toggle="modal" data-target="#confirmStop"> Stop ICO</button>
+                                    <button id="ico_start" class="btn btn-blue" onclick="setICOStatus(1)" style="display:none;"> Start ICO</button>
+                                <% }else { %>
+                                    <button id="ico_stop" class="btn btn-blue"  data-toggle="modal" data-target="#confirmStop" style="display:none;"> Stop ICO</button>
+                                    <button id="ico_start" class="btn btn-blue" onclick="setICOStatus(1)"> Start ICO</button>
+                                <% } %>
+                            </div>
+                            <div class="panel-body">
+                                <!-- Modal -->
+                                <div id="confirmStop" class="modal fade" role="dialog">
+                                    <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="x_panel" style="border:none; border-radius:6px">
+                                                <div class="x_title" style="padding-left: 20px;">
+                                                    <h2>Warning</h2>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content">
+                                                    <div class="form-group" style="text-align: center; margin-bottom: 31px; padding: 10px;">
+                                                        <label>Are you going to stop ico?</label><br><br>
+                                                        <button class="btn-custom" data-dismiss="modal" style="float:right; margin: 5px;">No</button>
+                                                        <button class="btn-custom" data-dismiss="modal" style="float:right; margin: 5px;" onclick="setICOStatus(0)">Yes</button>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- Modal content-->
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <% if(!common.ico_activation) { %>
+                                <div style="width: 100%; overflow-x:auto">
+                                    <table id="icolist" class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Coins</th>
+                                                <th>Price</th>
+                                                <th>Bonus</th>
+                                                <th>Start date</th>
+                                                <th>Days</th>
+                                                <th style="width:90px;">Action</th>
+                                            </tr>
+                                            <% for ( var i = 0; i < stages.length; i++){ %>
+                                                <tr id="ico_item_<%= i+1 %>" > 
+                                                    <td><input type="text" value="<%= stages[i]['coins'] %>"/></td>
+                                                    <td><input type="text" value="<%= stages[i]['price'] %>"/></td>
+                                                    <td><input type="text" value="<%= stages[i]['bonus'] %>"/></td>
+                                                    <td>
+                                                        <% if(stages[i].startDate != null && stages[i].startDate != "") { %>
+                                                            <input id="datepicker_ico<%= i %>" type="text" class="date input-type-1" value="<%= stages[i].startDate.toLocaleDateString() %>">
+                                                        <% } else { %>
+                                                            <input id="datepicker_ico<%= i %>" type="text" class="date input-type-1" value="">
+                                                        <% } %>
+                                                    </td>
+                                                    <td><input type="text" value="<%= stages[i]['days'] %>"/></td>
+                                                    <td style="display: none"><input type="text" value="<%= stages[i]['soldAmount'] %>"/></td>
+                                                    <td style="width:90px; text-align: right"><button class="btn-danger" onclick="removeStage(1)"><i class="fa fa-minus-circle"> Delete</i></button></td>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="text-center col-md-6 marginAuto">
+                                    
+                                    <div class="col-md-6">
+                                        <button class="btn btn-blue" onclick="addStage()"><i class="fa fa-plus-circle"></i> Add stage</button>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button class="btn btn-blue" onclick="saveICOStages()"><i class="fa fa-save"></i> Save</button>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <!-- PAGE FOOTER -->
+                
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+    
+    <script src="assets/js/icotable.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+  <!-- LEFT PRIMARY NAVIGATION -->
+    <div class="col-md-3 left_col">
+        <div class="scroll-view">
+            <div class="navbar nav_title">
+                <h1 class="logo_wrapper">
+                    <a href="http://blockvestico.io/" class="site_logo">
+                        <img class="logo" src="assets/images/blockvest-logo11.png" alt="Blockvest logo">
+                        <span class="logo-text"><img class="logo" src="assets/images/blockvest-logotext.png" alt="Blockvest logo"></span>
+                    </a>
+                </h1>
+            </div>
+            <div class="clearfix"></div>
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <div class="menu_section">
+                    <ul class="nav side-menu">
+                        <li>
+                            <a  href="/dashboard"><i class="icon-home icons"></i> <span>Dashboard</span></span></a>
+                        </li>
+                    
+                        <li>
+                            <% if(role == "customer") { %>
+                                <a><i class="icon-wallet icons"></i> <span>Wallets</span><span class="fa fa-angle-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="/blockvest"><span>My Wallet</span></a></li>
+                                    <li><a href="/exchange"><span>Exchange</span></a></li>
+                                </ul>
+                            <% } else {%>
+                                <a href="/blockvest"><i class="icon-wallet icons"></i> <span>Wallets</span></span></a>
+                            <% } %>
+                        </li>
+
+                        <li>
+                            <% if( role != "customer"){ %>
+                                <a><i class="icon-refresh icons"></i> <span>Transactions</span><span class="fa fa-angle-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="/btctransaction"><span>BTC Transaction</span></a></li>
+                                    <li><a href="/ethtransaction"><span>ETH Transaction</span></a></li>
+                                    <li><a href="/blvtransaction"><span>BLV Transaction</span></a></li>
+                                </ul>
+                            <% } else{%>
+                                <a href="/blvtransaction"><i class="icon-refresh icons"></i> <span>Transactions</span></span></a>
+                            <% } %>
+                        </li>
+                    
+                        <li><a><i class="icon-user icons"></i> <span>User Information</span><span class="fa fa-angle-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="/profile"><span>Profile</span></a></li>
+                                <li><a href="/affiliate"> <span>Affiliate</span></a></li>
+                            </ul>
+                        </li>
+                        <!-- admin panel -->
+                        <% if( role != "customer"){ %>
+                            <li><a><i class="icon-people icons"></i> <span>Users</span><span class="fa fa-angle-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="/memberlist"> <span>Members</span></a></li>
+                                </ul>
+                            </li>
+                        <% } %>
+                        <!-- admin panel -->
+
+                        <li>
+                            <a><i class="icon-settings icons"></i> <span>Settings</span><span class="fa fa-angle-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="/security"><span>Google Authentication</span></a></li>
+                                <% if( role != "customer"){ %>
+                                    <li><a href="/icosetting"><span>ICO Setting</span></a></li>
+                                    <li><a href="/affiliate_bonus"><span>Affiliate Bonus Setting</span></a></li>
+                                <% } %>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+        
+            </div>  
+            <!-- /sidebar menu -->
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+                <a data-toggle="tooltip" data-placement="top" title="Settings">
+                    <span class="icon-settings icons" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" id="btnFullscreen" data-placement="top" title="FullScreen">
+                    <span class="icon-size-fullscreen icons" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="Lock">
+                    <span class="icon-eye icons" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
+                    <span class="icon-power icons" aria-hidden="true"></span>
+                </a>
+            </div>
+            <!-- /menu footer buttons -->
+        </div>
+    </div>
+    <!-- TOP SECONDARY NAVIGATION -->
+    <div class="top_nav">
+        <div class="nav_menu">
+
+            <ul class="nav navbar-nav navbar-left">
+                <li class="toggle-li">
+                    <div class="nav toggle burger-nav">
+                        <a id="menu_toggle">
+                            <div class="burger">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul> <!-- top menu ul -->
+
+            <ul class="nav navbar-nav navbar-left col-md-9">
+                    <div class="tickers-white-indicative crypto-ticker">
+                            <ul id="webticker-white-icons">
+                                    <!-- <li class="trade-info">
+                                            BLV
+                                            <div class="count" id="blvusd_rate">$<%= config.blvusdRate %></div>
+                                        </li>
+                        
+                                        <li class="trade-info">
+                                            <i class="cc ETH" title="ETH"></i>
+                                            <span id="ethusd_changerate" class="count_top green"><i class="fa fa-sort-asc">1.5%</i></span>
+                                            <div class="count" id="ethusd_rate"></div>
+                                        </li>
+                                        <li class="trade-info">
+                                            <i class="cc BTC" title="BTC"></i>
+                                            <span id="btcusd_changerate" class="count_top red"><i class="fa fa-sort-asc">1.5%</i></span>
+                                            <div class="count" id="btcusd_rate"></div>
+                                        </li> -->
+                              <li class="trade-info" data-update="item1"><i class="cc BTC"></i> <span class="indicative-value">BTC <span class="fa fa-caret-down"></span> 1.5%</span>&nbsp<span class="coin-value count"  id="btcusd_rate"></span></li> 
+                              <li class="trade-info" data-update="item1"><i class="cc ETH"></i> <span class="indicative-value">ETH <span class="fa fa-caret-up"></span> 1.5%</span>&nbsp<span class="coin-value count"  id="ethusd_rate"></span></li>
+                              <li class="trade-info" data-update="item1"><i class=""></i> <span class="indicative-value">BLV <span class="fa fa-caret-up"></span> </span>&nbsp<span class="coin-value count"  id="blvusd_rate">$<%= config.blvusdRate %></span></li>
+
+                            </ul>
+                          </div>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <% if(locals.userinfo.photo == undefined || locals.userinfo.photo == "" ) { %>
+                            <img src="assets/images/profile-pic.jpg" alt="user-image">
+                        <% } else { %>
+                            <img src="<%= userinfo.photo %>" alt="user-image">
+                        <% } %>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <li><a href="/profile"> Profile</a></li>
+                        <li>
+                            <a href="/security">
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+   
+        </div>
+    </div>

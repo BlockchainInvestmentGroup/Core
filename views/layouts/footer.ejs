@@ -1,0 +1,187 @@
+    <!-- JS SCRIPTS -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollbar.min.js"></script>
+    <script src="assets/plugins/modernizr/modernizr.custom.js"></script>
+    <script src="assets/plugins/classie/classie.js"></script>  
+    <script src="assets/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/plugins/select2/select2.min.js"></script>
+    <script src="assets/plugins/highcharts/highcharts.js"></script>
+    <script src="assets/plugins/highcharts/exporting.js"></script>
+    <script src="assets/plugins/dataTables/jquery.dataTables.min.js"></script>
+    <script src="assets/plugins/flipclock/flipclock.js"></script>
+
+    <!-- WEBTICKER -->
+    <script src="assets/plugins/webticker/jquery.webticker.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <!-- CHARTS -->
+    <script src="assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- Custom Charts Scripts -->
+    <!-- <script src="assets/js/charts.js"></script> -->
+    <script src="assets/plugins/amcharts/amcharts.js"></script>
+    <script src="assets/plugins/amcharts/depthChart/serial.js"></script>
+    <script src="assets/plugins/amcharts/depthChart/export.min.js"></script>
+    <script src="assets/plugins/amcharts/depthChart/light.js"></script>
+    <script src="assets/js/charts-amcharts.js"></script>
+    
+    <!-- bootstrap-datetimepicker -->
+    <script src="assets/plugins/moment/min/moment.min.js"></script>
+    <script src="assets/plugins/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/js/custom.min.js"></script>
+    <script src="assets/js/preloader.min.js"></script>
+
+    <script>
+        var btcusdRate = 0;
+        var btcusdChangeRate = 0;
+        var ethusdRate = 0;
+        var ethusdChangeRate = 0;
+        var blvusdRate = 0;
+
+        $(function(){
+            getExchangeRate();
+            getPending();
+            setInterval(function(){ getExchangeRate(); }, 20000);
+            setInterval(function(){ getPending(); }, 10000);
+        });
+         function fallbackCopyTextToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Fallback: Copying text command was ' + msg);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+
+            document.body.removeChild(textArea);
+        }
+        function copyTextToClipboard(text) {
+            if (!navigator.clipboard) {
+                fallbackCopyTextToClipboard(text);
+                return;
+            }
+            navigator.clipboard.writeText(text).then(function() {
+                console.log('Async: Copying to clipboard was successful!');
+            }, function(err) {
+                console.error('Async: Could not copy text: ', err);
+            });
+        }
+
+        function getExchangeRate(){
+            var ajax_url = '/get_exchange_rate';
+            $.post(
+                ajax_url,
+                function(res){
+                    if(res.result == "success"){
+                        btcusdRate = res.btcusdRate;
+                        btcusdChangeRate = res.btcusdChangeRate;
+                        ethusdRate = res.ethusdRate;
+                        ethusdChangeRate = res.ethusdChangeRate;
+                        blvusdRate = res.blvusdRate;
+
+                        $('#btcusd_rate').text("$" + btcusdRate);
+                        if( btcusdChangeRate >= 0 ){
+                            $('#btcusd_changerate').addClass('green');
+                            $('#btcusd_changerate').html('<i class="fa fa-sort-asc">' + btcusdChangeRate + '%</i>');
+                        } else {
+                            $('#btcusd_changerate').addClass('red');
+                            $('#btcusd_changerate').html('<i class="fa fa-sort-desc">' + Math.abs(btcusdChangeRate) + '%</i>');
+                        }
+
+                        $('#ethusd_rate').text("$" + ethusdRate);
+                        if( ethusdChangeRate >= 0 ){
+                            $('#ethusd_changerate').addClass('green');
+                            $('#ethusd_changerate').html('<i class="fa fa-sort-asc">' + ethusdChangeRate + '%</i>');
+                        } else {
+                            $('#ethusd_changerate').addClass('red');
+                            $('#ethusd_changerate').html('<i class="fa fa-sort-desc">' + Math.abs(ethusdChangeRate) + '%</i>');
+                        }
+
+                        $('#blvusd_rate').html("$" + blvusdRate);
+                    }
+                }
+            )
+        }
+
+        function getPending(){
+            var ajax_url = '<%= config.site_url %>' + '/getPending';
+       
+            $.post(
+                ajax_url,
+                function(result){
+                    if(result.status == undefined || result.status == "fail") {
+                        console.log("session lost");
+                        return;
+                    }
+                    //console.log("wallet/pending result : ", result);
+                    var btcPending = ""+result.pendingAmount.btc;
+                    var ethPending = ""+result.pendingAmount.eth;
+                    var blvPending = ""+result.pendingAmount.blv;
+                    if( btcPending.length > 10 ) btcPending = btcPending.substr(0,10);
+                    if( ethPending.length > 10 ) ethPending = ethPending.substr(0,10);
+                    if( blvPending.length > 10 ) blvPending = blvPending.substr(0,10);
+
+                    var balance_blv_pending = $('#balance_blv_pending');
+                    if( balance_blv_pending != undefined ){
+                        $('#balance_btc_pending').html(btcPending);
+                        $('#balance_blv_pending').html(blvPending);
+                        $('#balance_eth_pending').html(ethPending);
+                    }
+
+                    if( result.user == undefined || result.user == null ) return;
+                    
+                    var btc_balance = $('#balance_btc');
+                    if( btc_balance != undefined){
+                        $('#balance_btc').html(result.user.btcBalance.toFixed(8));
+                    }
+
+                    var eth_balance = $('#balance_eth');
+                    if(eth_balance != undefined){
+                        $('#balance_eth').html(result.user.ethBalance.toFixed(8));
+                    }
+
+                    var blv_balance = $('#balance_blv');
+                    if(blv_balance != undefined){
+                        $('#balance_blv').html(result.user.blvBalance.toFixed(8).slice(0,14));
+                    }
+
+                    var btc_balance = $('#balance_btc_available');
+                    if(btc_balance != undefined){
+                        $('#balance_btc_available').html(result.user.btcBalance.toFixed(8));
+                    }
+
+                    var eth_balance = $('#balance_eth_available');
+                    if(eth_balance != undefined){
+                        $('#balance_eth_available').html(result.user.ethBalance.toFixed(8));
+                    }
+
+                    var blv_balance = $('#balance_blv_available');
+                    if(blv_balance != undefined){
+                        $('#balance_blv_available').html(result.user.blvBalance.toFixed(1));
+                    }
+
+                    var purchased_blv_balance = $('#purchase_blv_available');
+                    if(purchased_blv_balance != undefined){
+                        var val = result.user.blvBalance - result.user.bonus - result.user.ref_bonus;
+                        $('#purchase_blv_available').html(val.toFixed(1));
+                    }
+
+                    var blv_bonus = $('#blv_bonus');
+                    if(blv_bonus != undefined){
+                        $('#blv_bonus').html(result.user.bonus.toFixed(1));
+                    }
+
+                    var ref_bonus = $('#ref_bonus');
+                    if(ref_bonus != undefined){
+                        $('#ref_bonus').html(result.user.ref_bonus.toFixed(1));
+                    }
+                }
+            );
+        }
+
+    </script>

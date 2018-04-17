@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+    <style>
+        .form-control-event{
+            margin-right: 55px;
+            padding: 10px;
+        }
+    </style>
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                        <div class="clearfix"></div>
+                        <div class="padding-30lr col-md-12">
+                        <div class="header-title-breadcrumb element-box-shadow">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                        <h3>User Profile</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spacer_30"></div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-4">
+                                    <div class="panel panel-cryptic element-box-shadow">
+                                        <div class="section1 text-center">
+                                            <% if(locals.userinfo.photo == undefined || locals.userinfo.photo == "") { %>
+                                                <img id="user_photo" src="assets/images/profile-pic.jpg" alt="user-image">
+                                            <% } else { %>
+                                                <img id="user_photo" src="<%= userinfo.photo %>" alt="user-image">
+                                            <% } %>
+
+                                            <form id="upload_form" action="/upload_img" method="POST" encType="multipart/form-data">
+                                                <input id="select_img" type="file" name="file" style="display:none">
+                                            </form>
+
+                                            <h3 class="text-bold control-label" style="text-align:center"><%= userinfo.first_name %> <%= userinfo.last_name %></h3>
+                                            <h4 class="text-bold"><i class="fa fa-envelope-o"></i> <%= userinfo.email %></h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-lg-8">
+                                <!--Personal details-->
+                                <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                    <div class="panel-heading padding_30">
+                                        <h3 class="no-margin">Personal details</h3>
+                                    </div>
+                                    <div class="panel-body padding_30">
+                                    <form action="/profile" method="POST" class="form-horizontal">
+                                        <fieldset>
+                                            <div class="col-lg-12">
+                                                <h3 class="no-margin">Account Information</h3>
+                                            <hr/>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="username" class="col-lg-12 control-label">Username</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="username" value="<%= userinfo.username %>" type="text" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="sponsor" class="col-lg-12 control-label">Affiliate Username</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="sponsor" value="<%= userinfo.sponsor %>"  type="text" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="first_name" class="col-lg-12 control-label">first name</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="first_name" value="<%= userinfo.first_name %>" placeholder="James" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="last_name" class="col-lg-12 control-label">last name</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="last_name" value="<%= userinfo.last_name %>" placeholder="Stones" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="email" class="col-lg-12 control-label">Email address</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="email" value="<%= userinfo.email %>" placeholder="James.Stones@Gmail.com" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="new_password" class="col-lg-12 control-label">New Password</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="new_password" placeholder="New password" type="password">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group col-lg-6">
+                                                <label for="confirm_password" class="col-lg-12 control-label">Confirm Password</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="confirm_password" placeholder="Confirm password" type="password">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <h3 class="wordbreak-normal margin-top30">KYC information</h3>
+                                                <hr/>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="street" class="col-lg-12 control-label">street</label>
+                                                <div class="col-lg-12">
+                                                <input name="street" class="form-control input-type-1" id="street" value="<%= userinfo.street %>" placeholder="9947 Harwin Drive, Suite L" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="city" class="col-lg-12 control-label">city</label>
+                                                <div class="col-lg-12">
+                                                <input name="city" class="form-control input-type-1" id="city" value="<%= userinfo.city %>" placeholder="new york" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="state" class="col-lg-12 control-label">state</label>
+                                                <div class="col-lg-12">
+                                                <input name="state" class="form-control input-type-1" id="state" value="<%= userinfo.state %>" placeholder="california" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="post_code" class="col-lg-12 control-label">post code</label>
+                                                <div class="col-lg-12">
+                                                <input name="post_code" class="form-control input-type-1" id="post_code" value="<%= userinfo.post_code %>" placeholder="880022" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-lg-6">
+                                                <label for="residence" class="col-lg-12 control-label">Country of Residence</label>
+                                                <div class="col-lg-12">
+                                                    <select class="form-control input-type-1" id="residence" name="residence" required>
+                                                        <!-- <option value="1">1</option> -->
+                                                        <% for( var i =0; i < countries.length; i++){ %>
+                                                            <% if(locals.userinfo.residence == countries[i].name){ %>
+                                                                <option value="<%= countries[i].name %>" selected><%= countries[i].name %></option>
+                                                            <% }else{ %>
+                                                                <option value="<%= countries[i].name %>"><%= countries[i].name %></option>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-lg-6">
+                                                <label for="citizenship" class="col-lg-12 control-label">Country of citizenship</label>
+                                                <div class="col-lg-12">
+                                                    <select class="form-control input-type-1" id="citizenship" name="citizenship" required>
+                                                        <!-- <option value="1">1</option> -->
+                                                        <% for( var i =0; i < countries.length; i++){ %>
+                                                            <% if(locals.userinfo.citizenship == countries[i].name){ %>
+                                                                <option value="<%= countries[i].name %>" selected><%= countries[i].name %></option>
+                                                            <% }else{ %>
+                                                                <option value="<%= countries[i].name %>"><%= countries[i].name %></option>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="old_password" class="col-lg-12 control-label">Current Password</label>
+                                                <div class="col-lg-12">
+                                                    <input class="form-control input-type-1" name="old_password" placeholder="Current password" type="password" required>
+                                                </div>
+                                            </div>  
+                                            <div class="col-lg-12">
+                                                <button  type="submit" class="btn btn-blue">Save profile</button>  
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    </div><!-- END panel-body -->
+                                </div><!-- END Personal details-->
+                               
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <!-- PAGE FOOTER -->
+                
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+    <script>
+        $('#residence').select2();
+        $('#citizenship').select2();
+
+        $('#user_photo').click(function(){
+            $('#select_img').trigger('click');
+        });
+        $('#select_img').change(function(){
+            $('#upload_form').submit();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+    <link rel="stylesheet" href="assets/plugins/nested-tree/Treant.css">
+    <link rel="stylesheet" href="assets/plugins/nested-tree/custom-color-plus-scrollbar.css">
+    <style>
+        .form-control-event{
+            margin-right: 55px;
+            padding: 10px;
+        }
+        p {
+            line-height: 20px;
+            margin: 0px;
+            color: #292828;
+        }
+        .treenode {
+            padding: 5px;
+            background-color: #dcdbdb;
+        }
+    </style>
+
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                    <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                        <div class="background-opacity">
+                    <div class="spacer_30"></div>
+                    <div class="clearfix"></div>
+                    <div class="padding-30lr col-md-12">
+                    <!-- <div class="header-title-breadcrumb element-box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                    <h3>Affilitate Page</h3>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="chart-section1">
+                        <!--Personal details-->
+                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                <div class="panel-heading">
+                                        <h3 class="no-margin text-center">Affilitate Page</h3>
+                                    </div>
+                            <div class="row" style="padding:10px 8px 0px 30px;">
+                                <div class="col-lg-6">
+                                    <h4>
+                                        <span>refferral link: </span><input id="ref_url" value="<%= config.site_url %>/?raf=<%= userinfo.ref_id %>" style="width:80%" readonly>
+                                        <a id="copy_link"><i class="fa fa-fw fa-copy"></i></a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="chart" id="OrganiseChart1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-section1">
+                        <div class="panel panel-default table-market-capitalization">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"></h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-cryptic dataTable no-footer" id="blv_transaction_tbl" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>No</th>
+                                            <th class="text-right">Transaction ID <i class="fa fa-sort"></i></th>
+                                            <th class="text-right">Bonus BLV <i class="fa fa-sort"></i></th>
+                                            <th class="text-right">Purchased BLV <i class="fa fa-sort"></i></th>
+                                            <th class="text-right">User <i class="fa fa-sort"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( var i =0; i < trans.length; i++){ %>
+                                            <tr role="row">
+                                                <th><%= i+1 %></th>
+                                                <!-- <td class="text-right"><a href="https://etherscan.io/tx/<%= trans[i].txHash %>" target="_blank"><%= trans[i].txHash %></a></td> -->
+                                                <td class="text-right"><a href="https://ropsten.etherscan.io/tx/<%= trans[i].txHash %>" target="_blank"><%= trans[i].txHash %></a></td>
+                                                <td class="text-right"><%= trans[i].bonus.toFixed(1) %></td>
+                                                <td class="text-right"><%= trans[i].icoAmount.toFixed(1) %></td>
+                                                <td class="text-right"><%= trans[i].performer %></td>
+                                            </tr>
+        
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <!-- PAGE FOOTER -->
+                
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+    <script src="assets/plugins/nested-tree/raphael.js"></script>
+    <script src="assets/plugins/nested-tree/Treant.js"></script>
+    <script src="assets/plugins/nested-tree/custom-color-plus-scrollbar.js"></script>
+    <script>
+   
+        $(function(){
+            var ajax_url = "/treeNodes";
+            $.post(
+                ajax_url,
+                function(res){
+                    if(res.status== "OK"){
+                        loadTree(res.role, res.username, res.data);
+                    }
+                }
+            );
+            jQuery('#blv_transaction_tbl').DataTable( {
+                "pageLength": 20
+            } );
+        });
+    
+        $('#copy_link').click(function(){
+            /* Get the text field */
+            var copyText = document.getElementById("ref_url");
+
+            /* Select the text field */
+            copyText.select();
+
+            /* Copy the text inside the text field */
+            document.execCommand("Copy");
+
+            /* Alert the copied text */
+            // alert("Copied the text: " + copyText.value);
+        });
+        
+        function loadTree(role, root_username, users){
+            var nodes = [{
+                container: "#OrganiseChart1",
+                rootOrientation:  'NORTH', // NORTH || EAST || WEST || SOUTH
+                // levelSeparation: 30,
+                siblingSeparation:   20,
+                subTeeSeparation:    60,
+                scrollbar: "fancy",
+                
+                connectors: {
+                    type: 'step'
+                },
+                node: {
+                    HTMLclass: 'treenode'
+                }
+            }];
+            
+            var parent_node = {
+                text: {
+                    name: "Site",
+                },
+                HTMLid: "site"
+            };
+
+            switch(role){
+                case "SuperAdmin":
+                    nodes.push(parent_node);
+
+                    for( var i = 0; i < users.length; i++){
+                        var user = users[i];
+                        if(user.level == 0){
+                            var node = {
+                                parent: parent_node,
+                                text: {
+                                    name: user.username + "(" + user.childCount + ")",
+                                },
+                                HTMLid: user.username
+                            }
+                            nodes.push(node);
+
+                            checkChildren(users, nodes, node, user.username, role, 1);
+                        }
+                    }
+                    break;
+                case "Administrator":
+                    nodes.push(parent_node);
+
+                    for( var i = 0; i < users.length; i++){
+                        var user = users[i];
+                        if(user.account_type == 1) continue;
+
+                        if(user.level = 0){
+                            var node = {
+                                parent: parent_node,
+                                text: {
+                                    name: user.username + "(" + user.childCount + ")",
+                                },
+                                HTMLid: user.username
+                            }
+                            nodes.push(node);
+
+                            checkChildren(users, nodes, node, user.username, role, 1);
+                        }
+                    }
+                    break;
+                case "customer":
+                    for( var i = 0; i < users.length; i++){
+                        var user = users[i];
+                        if(user.username == root_username){
+                            var node = {
+                                text: {
+                                    name: "Me (" + user.childCount + ")",
+                                },
+                                HTMLid: user.username
+                            }
+                            nodes.push(node);
+
+                            checkChildren(users, nodes, node, user.username, role, 0);
+                        }
+                    }
+                    break;
+            }
+
+            new Treant(nodes);
+        }
+        
+        function checkChildren(users, nodes, parent_node, sponsor, role, depth){
+            if(depth > 3) return;
+
+            for( var i = 0; i < users.length; i++){
+                var user = users[i];
+                if( (role=="Administrator" || role=="customer") && user.account_type == 1) continue;
+
+                if( user.sponsor == sponsor){
+                    var node = {
+                        parent: parent_node,
+                        text: {
+                            name: user.username + "(" + user.childCount + ")",
+                        },
+                        HTMLid: user.username
+                    }
+                    nodes.push(node);
+
+                    checkChildren(users, nodes, node, user.username, role, depth+1);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

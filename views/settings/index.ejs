@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+    <style>
+        .form-control-event{
+            margin-right: 55px;
+            padding: 10px;
+        }
+    </style>
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                            <div class="spacer_30"></div>
+                            <div class="clearfix"></div>
+                            <div class="padding-30lr col-md-12">
+                    <!-- <div class="header-title-breadcrumb element-box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                    <h3>Security settings</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="chart-section1">
+                        <!--Personal details-->
+                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                <div class="panel-heading">
+                                        <h3 class="no-margin text-center">Security settings</h3>
+                                    </div>
+                            <div class="panel-body">
+                                <h4>Two-factor authentication</h4>
+                                <div class="row">
+                                    <% if(locals.data_url){ %>
+                                        <div class="col-md-4 col-sm-12 col-xs-12" style="text-align:center;padding-top: 20px;">
+                                            <img id="qr_code" src="<%= data_url %>"/>
+                                            <p style="font-size:12px;padding-top:5px;"><%= secret_key %></p>
+                                        </div>
+                                    <% } %>
+                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                        <p>Scan the QR code or enter the secret into your 2FA app manually, then enter a code to enable two-factor authentication.</p>
+                                        <p>Without your 2FA code, you might lose access to your account! Do not enable 2FA until you've created a backup of your 2FA app, the QR code or the secret.</p>
+                                        <form action="/setting_2fa" method="POST">
+                                            <% if(error && error.length > 0){ %>
+                                                <div class="alert alert-danger" style="margin:0px 10px;">
+                                                    <%= error %>
+                                                </div>
+                                                    <% } else if(success && success.length > 0 ){ %>
+                                                <div class="alert alert-success" style="margin:0px 10px;">
+                                                    <%= success %>
+                                                </div>
+                                            <% } %>
+                                            <% if(locals.data_url) { %>
+                                                <input name="data_url" type="hidden" value="<%= data_url %>">
+                                                <input name="secret" type="hidden" value="<%= data_secret %>">
+                                                <input name="secret_key" type="hidden" value="<%= secret_key %>">
+                                            <% } %>
+                                            <div class="form-group row">
+                                                <label for="token" class="col-lg-12 control-label">2FA code</label>
+                                                <div class="col-lg-12">
+                                                    <input name="token" class="form-control input-type-1" placeholder="Enter token" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <% if(locals.data_url) { %>
+                                                        <input class="btn btn-blue" type="submit" value="Enable 2FA">
+                                                    <% } else{%>
+                                                        <input class="btn btn-blue" type="submit" value="Disable 2FA">
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <!-- PAGE FOOTER -->
+                
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+</body>
+</html>

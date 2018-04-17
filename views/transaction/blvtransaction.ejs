@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                            <div class="spacer_30"></div>
+                            <div class="clearfix"></div>
+                            <div class="padding-30lr col-md-12">
+                            <!-- <div class="header-title-breadcrumb element-box-shadow">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                            <h3>Blockvest Transactions</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            
+                            <div class="chart-section1">
+                                <div class="panel panel-default table-market-capitalization">
+                                        <div class="panel-heading">
+                                                <h3 class="no-margin text-center">Blockvest Transactions</h3>
+                                            </div>
+                                <div class="panel-body">
+                                    <table class="table table-cryptic dataTable no-footer" id="blv_transaction_tbl" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>No</th>
+                                                <th class="text-right">Transaction ID <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Total BLV <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Purchased BLV <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Bonus BLV <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Price of BLV <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Coin Used <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Coin Price <i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Coin Amount<i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Date and time <i class="fa fa-sort-amount-desc"></i></th>
+                                                <% if(role = "SuperAdmin"){ %>
+                                                    <th class="text-right">Performer <i class="fa fa-sort"></i></th>
+                                                <% } %>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for( var i =0; i < trans.length; i++){ %>
+                                                <tr role="row">
+                                                    <th><%= i+1 %></th>
+                                                    <td class="text-right"><a href="https://etherscan.io/tx/<%= trans[i].txHash %>" target="_blank"><%= trans[i].txHash %></a></td>
+                                                    <% if (trans[i].type == 2){ %>
+                                                        <td class="text-right"><%= trans[i].Amount.toFixed(1) %></td>
+                                                        <td class="text-right"><%= (trans[i].Amount - trans[i].bonus).toFixed(1) %></td>
+                                                        <td class="text-right"><%= trans[i].bonus.toFixed(1) %></td>
+                                                        <td class="text-right"><%= trans[i].price %></td>
+                                                        <td class="text-right"><%= trans[i].icoType.toUpperCase() %></td>
+                                                        <td class="text-right"><%= trans[i].coin_price %></td>
+                                                        <td class="text-right"><%= trans[i].icoAmount %></td>
+                                                    <% } else if(trans[i].type == 3){ %>
+                                                        <td></td>
+                                                        <td class="text-right"><%= trans[i].icoAmount.toFixed(1) %></td>
+                                                        <td><%= trans[i].Amount.toFixed(1) %></td>
+                                                        <td></td>
+                                                        <td>Affiliate Bonus</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    <% } %>
+                                                    <td class="text-right"><%= trans[i].create_date.toLocaleString() %></td>
+                                                    <% if(role = "SuperAdmin"){ %>
+                                                        <td class="text-right"><%= trans[i].performer %></td>
+                                                    <% } %>
+                                                </tr>
+            
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <div class="spacer_30"></div>
+                <!-- PAGE FOOTER -->
+                <footer>
+                    <div class="pull-right"></div>
+                    <div class="clearfix"></div>
+                </footer>
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+
+    <script>
+        jQuery('#blv_transaction_tbl').DataTable( {
+            "pageLength": 20
+        } );
+    
+    </script>
+
+</body>
+</html>

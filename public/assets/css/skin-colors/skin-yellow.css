@@ -1,0 +1,112 @@
+/*------------------------------------------------------------------
+[Master Stylesheet] - [Table of contents]
+
+1. FONTS
+2. COLORS
+
+------------------------------------------------------------------- */
+
+
+/*---------------------------------------------*/
+/*--- 1. FONTS ---*/
+/*---------------------------------------------*/
+body{
+    font-family: 'Nunito';
+}
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6{
+    font-family: "Nunito";
+}
+p{
+    font-family: 'Nunito';
+}
+
+
+
+/*---------------------------------------------*/
+/*--- 2. COLORS ---*/
+/*---------------------------------------------*/
+/*DEFAULT COLOR: #FFD600 */
+.text-yellow,
+#crypto_address .address-pagination .pagination .active a,
+#crypto_address .address-pagination .pagination a:hover,
+.second-p span,
+.top_nav .navbar-right > li > a:hover i,
+.top_nav .navbar-right > li > a:focus i, 
+.top_nav .navbar-right > .open > a i,
+.top_nav .nav .megamenu-trigger:hover,
+.top_nav .navbar-left a.dropdown-is-active,
+.top_nav .nav .open>a,
+.top_nav .nav .open>a:focus,
+.top_nav .nav .open>a:hover,
+.top_nav .nav .dropdown>a:hover,
+.top_nav .nav>li>a:focus,
+.top_nav .nav>li>a:hover,
+.search--open .search__input,
+.tickers-white-sm .tickercontainer li .coin-value,
+.tickers-black-sm .tickercontainer li .coin-value,
+.search--open .btn--search-close i,
+.search--open .search__info {
+    color: #ffd500;
+}
+/*DEFAULT HOVER COLOR: #e0bc00 */
+a {
+    color: #e0bc00;
+}
+
+
+/*SEARCH INPUT PLACEHOLDER COLOR*/
+.search__input::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #ffd500;
+}
+.search__input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #ffd500;
+}
+.search__input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #ffd500;
+}
+
+
+/*BORDER COLOR*/
+.tickers-white-indicative .tickercontainer,
+.tickers-white-lg .tickercontainer,
+.tickers-white-sm .tickercontainer,
+.tickers-black-indicative .tickercontainer,
+.tickers-black-lg .tickercontainer,
+.tickers-black-sm .tickercontainer{
+	border-top-color: #ffd500;
+}
+
+
+
+/*BACKGROUND-COLOR*/
+.all-pages,
+.top_nav li a .badge{
+    background-color: #ffd500;
+}
+
+/*BACKGROUND*/
+.block-page form input.form-control,
+.cryptic-pagination.pagination .active a,
+.cryptic-pagination.pagination a:hover,
+.member01_social a:hover,
+#user_list .paginate_button:hover,
+#user_list .paginate_button.current,
+.go-back,
+.panel-cryptic .panel-heading,
+.pace-done .pace-cover,
+.sidebar-footer a:hover,
+.burger-nav #menu_toggle:hover span,
+.burger-nav #menu_toggle:focus span,
+.nav-sm .burger-nav #menu_toggle span,
+.nav.side-menu>li.active>a::before,
+.nav.side-menu>li.current-page>a::before{
+    background: #ffd500;
+}

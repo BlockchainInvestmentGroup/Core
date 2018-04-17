@@ -1,0 +1,178 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 16, 2018, 12:07:10 PM
+    Author     : dell
+*/
+
+/*------------------------------------------------------------------
+[Master Stylesheet] - [Table of contents]
+
+1. FONTS
+2. COLORS
+
+------------------------------------------------------------------- */
+
+
+/*---------------------------------------------*/
+/*--- 1. FONTS ---*/
+/*---------------------------------------------*/
+body{
+    font-family: 'Nunito';
+}
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6{
+    font-family: "Nunito";
+}
+p{
+    font-family: 'Nunito';
+}
+
+
+
+/*---------------------------------------------*/
+/*--- 2. COLORS ---*/
+/*---------------------------------------------*/
+/*DEFAULT COLOR: #FFD600 */
+.text-yellow,
+#crypto_address .address-pagination .pagination .active a,
+#crypto_address .address-pagination .pagination a:hover,
+.second-p span,
+.top_nav .navbar-right > li > a:hover i,
+.top_nav .navbar-right > li > a:focus i, 
+.top_nav .navbar-right > .open > a i,
+.top_nav .nav .megamenu-trigger:hover,
+.top_nav .navbar-left a.dropdown-is-active,
+.top_nav .nav .open>a,
+.top_nav .nav .open>a:focus,
+.top_nav .nav .open>a:hover,
+.top_nav .nav .dropdown>a:hover,
+.top_nav .nav>li>a:focus,
+.top_nav .nav>li>a:hover,
+.search--open .search__input,
+.tickers-white-sm .tickercontainer li .coin-value,
+.tickers-black-sm .tickercontainer li .coin-value,
+.search--open .btn--search-close i,
+.search--open .search__info {
+    color: #0B2832;
+}
+/*DEFAULT HOVER COLOR: #00db07 */
+a {
+    color: #0B2832;
+}
+
+
+/*SEARCH INPUT PLACEHOLDER COLOR*/
+.search__input::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #0B2832;
+}
+.search__input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #0B2832;
+}
+.search__input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #0B2832;
+}
+
+
+/*BORDER COLOR*/
+.tickers-white-indicative .tickercontainer,
+.tickers-white-lg .tickercontainer,
+.tickers-white-sm .tickercontainer,
+.tickers-black-indicative .tickercontainer,
+.tickers-black-lg .tickercontainer,
+.tickers-black-sm .tickercontainer{
+	border-top-color: #0B2832;
+}
+
+
+
+/*BACKGROUND-COLOR*/
+.all-pages,
+.top_nav li a .badge{
+    background-color: #0B2832;
+}
+
+/*BACKGROUND*/
+.block-page form input.form-control,
+.cryptic-pagination.pagination .active a,
+.cryptic-pagination.pagination a:hover,
+.member01_social a:hover,
+#user_list .paginate_button:hover,
+#user_list .paginate_button.current,
+.go-back,
+.panel-cryptic .panel-heading,
+.pace-done .pace-cover,
+.sidebar-footer a:hover,
+.burger-nav #menu_toggle:hover span,
+.burger-nav #menu_toggle:focus span,
+.nav-sm .burger-nav #menu_toggle span,
+.nav.side-menu>li.active>a::before,
+.nav.side-menu>li.current-page>a::before{
+    background: #10233f;
+}
+a{
+    color: #00db07;
+}
+
+.green-text{
+    color:#00db07;
+}
+.btn-blue{
+    color: #ffffff!important;
+    border-width: 5px!important;
+    border-color: #0B2832;
+    border-radius: 4px;
+
+    font-size: 16px;
+    font-weight: 700!important;
+    text-transform: uppercase!important;
+    background-color: #0B2832;
+}
+.btn-blue:hover {
+    letter-spacing: 0.5px;
+    padding:12px 17px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    transition: all .2s;
+}
+.btn-white{
+    color: #0e3a53!important;
+    border-width: 5px!important;
+    border-color: #0B2832;
+    border-radius: 4px;
+
+    font-size: 21px;
+    font-weight: 700!important;
+    text-transform: uppercase!important;
+    background-color: #fff;
+}
+.btn-white:hover {
+    letter-spacing: 1px;
+    padding:12px 17px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    transition: all .2s;
+}
+.scrollToTop, .select-form-date:after {
+    background: #0B2832;
+}
+.block-page form input.form-control:hover {
+   background: #00db07; 
+   border-radius: 4px;
+}
+.background-blue {
+    background: #0B2832;
+}
+/* .nav.side-menu>li.active>a::before, .nav.side-menu>li.current-page>a::before {
+    width: 0px;
+} */

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+   
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col right_col_exchange" role="main">
+                    <div class="exchange-section data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                        <div class="background-opacity">
+                            <div class="col-lg-12">
+                                <div class="content-2">
+                                    <% if(!(locals.cur_end_time == undefined || locals.cur_end_time == "")){ %>
+                                        <h5 class="text-white">Distribution Ends In:</h5>
+                                        <div class="countdownv2_holder">
+                                            <div class="countdownv2 clock flip-clock-wrapper" data-count-down="<%= cur_end_time.toString() %>"><span class="flip-clock-divider days"><span class="flip-clock-label">Days</span></span><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">4</div></div><div class="down"><div class="shadow"></div><div class="inn">4</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">5</div></div><div class="down"><div class="shadow"></div><div class="inn">5</div></div></a></li></ul><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><span class="flip-clock-divider hours"><span class="flip-clock-label">Hours</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul><span class="flip-clock-divider minutes"><span class="flip-clock-label">Minutes</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul><ul class="flip play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">8</div></div><div class="down"><div class="shadow"></div><div class="inn">8</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">7</div></div><div class="down"><div class="shadow"></div><div class="inn">7</div></div></a></li></ul><span class="flip-clock-divider seconds"><span class="flip-clock-label">Seconds</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><ul class="flip play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul></div>
+                                        </div>
+
+                                    <% if(role == "customer"){ %>
+                                        <a href="/exchange" class="btn btn-blue">BUY TOKENS</a>
+                                        <div class="day-bar">
+                                            <h6 class="text-white text-left no-margin">Softcap <span class="text-bold">in <%= total_days %> days</span></h6>
+                                            <div class="progress">
+                                            <div class="progress-bar background-blue" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:<%= cur_percentage %>%"><%= cur_percentage %>%
+                                            </div>
+                                            </div>
+                                            <h6 class="text-white text-right no-margin">Hardcap</h6>
+                                        </div>
+                                        
+                                        <h5 class="text-white">Total Tokens: <span class="text-bold"><%= total_tokens %> BLV</span></h5>
+                                        <h5 class="text-white">Tokens In Circulation: <span class="text-bold"><%= cur_tokens %> BLV</span></h5>
+                                        <h5 class="text-white">Token Price: <span class="text-bold">$<%= cur_price %></span></h5>
+                                    <% } %>
+
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% if( role == "customer"){ %>
+                                <div class="col-lg-12">
+                                    <div class="padding-30lr col-md-12">
+                                        <div class="row">
+                                            <% if( userinfo.secret == ""){ %>
+                                                <div class="alert alert-danger" style="margin:0px 10px;">
+                                                    Please enable <a href="/security" style="color:#0eff00">Google Two Factor Authentication.</a><br>
+                                                    If you did not enable Google Two Factor, you can not use most functions of our site.
+                                                </div>
+                                            <% } %>
+                                            
+                                            <div class="col-sm-6 col-lg-6">
+                                                <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                    <div class="panel-heading">
+                                                        <h3 class="no-margin">Blockvest Balance</h3>
+                                                    </div>
+                                                    <div class="panel-body padding_30">
+                                                        
+                                                        <p>Total : <span id="balance_blv_available">0.0</span> BLV</p>
+                                                        <p>Purchased : <span id="purchase_blv_available">0.0</span> BLV</p>
+                                                        <button class="btn btn-blue" id="btn_show_trans">Show transactions</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-lg-6">
+                                            <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                <div class="panel-heading">
+                                                    <h3 class="no-margin">Account Bonus</h3>
+                                                </div>
+                                                <div class="panel-body padding_30">
+                                                    
+                                                    <p>Blockvest Bonus: <span id="blv_bonus">0.0</span> BLV</p>
+                                                    <p>Affiliate Bonus: <span id="ref_bonus">0.0</span> BLV</p>
+                                                    <button class="btn btn-blue" id="btn_show_affiliate">Show Affiliate</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <% if(common.ico_activation){%>
+                                            <div class="col-sm-12 col-lg-12">
+                                                <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                    <div class="panel-heading">
+                                                        <h3 class="no-margin">ICO progress</h3>
+                                                        </div>
+                                                        <div class="panel-body padding_30">
+                                                        <table id="icolist" class="table table-striped">
+                                                            <tbody>
+                                                                <tr class="headings">
+                                                                    <th class="column-title">No. </th>
+                                                                    <th class="column-title">Start date </th>
+                                                                    <th class="column-title">Coins </th>
+                                                                    <th class="column-title">Price </th>
+								                                    <th class="column-title">Bonus </th>
+                                                                    <th class="column-title">Days </th>
+                                                                    <th class="column-title">soldAmount </th>
+                                                                    <th class="column-title">Status </th>
+                                                                </tr>
+                                                                <% for ( var i = 0; i < stages.length; i++){ %>
+                                                                    <% 
+                                                                        var str = "" + stages[i]['coins'];
+                                                                        var pos = str.length % 3;
+                                                                        if(pos == 0) pos = 3;
+                        
+                                                                        var coinstr = str.substr(0, pos);
+                                                                        
+                                                                        while(pos + 3 <= str.length){
+                                                                        coinstr += ", " + str.substr(pos, 3);
+                                                                        pos += 3;
+                                                                        }
+                                                                        
+                                                                        var status = "";
+                                                                        switch(parseInt(stages[i].status)){
+                                                                            case 0:
+                                                                                if(common.ico_activation) status = "Ready";
+                                                                            break;
+                                                                            case 1:
+                                                                                status = "In progress";
+                                                                            break;
+                                                                            case 2:
+                                                                                status = "Finished";
+                                                                            break;
+                                                                        }
+                        
+                                                                        var date = "";
+                                                                        if(stages[i].startDate != undefined && stages[i].startDate != ""){
+                                                                            date = stages[i].startDate.toLocaleString();
+                                                                        }
+                                                                    %>   
+                        
+                                                                    <tr>
+                                                                        <td><%= i+1 %></td>
+                                                                        <td><%= date %></td>
+                                                                        <td><%= coinstr %></td>
+                                                                        <td>$ <%= stages[i].price.toFixed(2) %></td>
+									                                    <td><%= stages[i].bonus.toFixed(2) %>%</td>
+                                                                        <td><%= stages[i].days %> Days</td>
+                                                                        <td><%= stages[i].soldAmount.toFixed(1) %></td>
+                                                                        <td><%= status %></td>
+                                                                    </tr>
+                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-9 marginAuto">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                    <div class="panel-heading">
+                                                        <h3 class="no-margin text-center">Exchange Volumes</h3>
+                                                    </div>
+                                                    <div class="panel-body padding_30">
+                                                        <div id="gas_limit_alarm" class="alert alert-danger" style="margin:0px 10px; display:none"></div>
+                                                        
+                                                        <div class="highchart_currency" id="chart_btc"></div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% if(common.ico_activation){%>
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                            <div class="panel-heading">
+                                                <h3 class="no-margin">ICO progress</h3>
+                                                </div>
+                                                <div class="panel-body padding_30">
+                                                <table id="icolist" class="table table-striped">
+                                                    <tbody>
+                                                        <tr class="headings">
+                                                            <th class="column-title">No. </th>
+                                                            <th class="column-title">Start date </th>
+                                                            <th class="column-title">Coins </th>
+                                                            <th class="column-title">Price </th>
+                                                            <th class="column-title">Bonus </th>
+                                                            <th class="column-title">Days </th>
+                                                            <th class="column-title">soldAmount </th>
+                                                            <th class="column-title">Status </th>
+                                                        </tr>
+                                                        <% for ( var i = 0; i < stages.length; i++){ %>
+                                                            <% 
+                                                                var str = "" + stages[i]['coins'];
+                                                                var pos = str.length % 3;
+                                                                if(pos == 0) pos = 3;
+                
+                                                                var coinstr = str.substr(0, pos);
+                                                                
+                                                                while(pos + 3 <= str.length){
+                                                                coinstr += ", " + str.substr(pos, 3);
+                                                                pos += 3;
+                                                                }
+                                                                
+                                                                var status = "";
+                                                                switch(parseInt(stages[i].status)){
+                                                                    case 0:
+                                                                        if(common.ico_activation) status = "Ready";
+                                                                    break;
+                                                                    case 1:
+                                                                        status = "In progress";
+                                                                    break;
+                                                                    case 2:
+                                                                        status = "Finished";
+                                                                    break;
+                                                                }
+                
+                                                                var date = "";
+                                                                if(stages[i].startDate != undefined && stages[i].startDate != ""){
+                                                                    date = stages[i].startDate.toLocaleString();
+                                                                }
+                                                            %>   
+                
+                                                            <tr>
+                                                                <td><%= i+1 %></td>
+                                                                <td><%= date %></td>
+                                                                <td><%= coinstr %></td>
+                                                                <td>$ <%= stages[i].price.toFixed(2) %></td>
+                                                                <td><%= stages[i].bonus.toFixed(2) %>%</td>
+                                                                <td><%= stages[i].days %> Days</td>
+                                                                <td><%= stages[i].soldAmount.toFixed(1) %></td>
+                                                                <td><%= status %></td>
+                                                            </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                                <div class="col-lg-12">
+                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                        <div class="panel-heading">
+                                            <h3 class="no-margin">Latest Transactions</h3>
+                                        </div>
+                                    
+                                        <div class="panel-bodypadding_30">
+                                        <table class="table table-cryptic dataTable no-footer" id="blv_transaction_tbl" role="grid">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>No</th>
+                                                    <th class="text-right">Transaction ID <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Total BLV <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Purchased BLV <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Bonus BLV <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Price of BLV <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Coin Used <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Coin Price <i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Coin Amount<i class="fa fa-sort"></i></th>
+                                                    <th class="text-right">Date and time <i class="fa fa-sort-amount-desc"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <div class="spacer_30"></div>
+                <!-- PAGE FOOTER -->
+                <footer>
+                    <div class="pull-right"></div>
+                    <div class="clearfix"></div>
+                </footer>
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+
+    <% if(role != "customer"){ %>
+        <script>
+            
+            $(function(){
+                cryptic_highcharts();
+                setInterval(function(){ cryptic_highcharts(); }, 300000);
+                showLatestTransaction();
+                setInterval(function(){ showLatestTransaction(); }, 30000);
+                getAvailableGasAmount();
+                setInterval(function(){ getAvailableGasAmount(); }, 30000);
+            });  
+            
+            function getAvailableGasAmount(){
+                $(function(){
+                    $.post(
+                        "/getAvailableGasAmount",
+                        function(res){
+                            $('#gas_limit_alarm').html('');
+                            $('#gas_limit_alarm').hide();
+
+                            if(res.status == "success"){
+                                if(parseFloat(res.value) < 0.002){
+                                    $('#gas_limit_alarm').html('Site available gas amount is ' + res.value + 'ETH. Please deposit ethereum to admin account.<br> If available gas amount is not enough, BLV transaction can not be generated.');
+                                    $('#gas_limit_alarm').show();
+                                }
+                            }
+                        }
+                    )
+                });
+            }
+
+            function showLatestTransaction(){
+                $.post(
+                    "/getLatestTransaction",
+                    function(res){
+                        if(res.status == "success"){
+                            var content_html = "";
+                            for( var i = 0; i < res.trans.length; i++){
+                                var coinType = res.trans[i].icoType.toUpperCase();
+                                content_html += '<tr role="row">';
+                                content_html += '   <td>'+ (i+1) +'</td>';    
+                                switch(coinType){
+                                    case "BTC":
+                                        content_html += '   <td class="text-right"><a href="https://live.blockcypher.com/btc/tx/' + res.trans[i].coin_tx +'" target="_blank">'+ res.trans[i].coin_tx +'</a></td>';
+                                        break;
+                                    case "ETH": 
+                                        content_html += '   <td class="text-right"><a href="https://etherscan.io/tx/' + res.trans[i].coin_tx +'" target="_blank">'+ res.trans[i].coin_tx +'</a></td>';
+                                        break;
+                                }
+                                content_html += '   <td class="text-right">' + res.trans[i].Amount.toFixed(1) + '</td>';
+                                content_html += '   <td class="text-right">' + (res.trans[i].Amount - res.trans[i].bonus).toFixed(1) + '</td>';
+                                content_html += '   <td class="text-right">' + res.trans[i].bonus.toFixed(1) + '</td>';
+                                content_html += '   <td class="text-right">' + res.trans[i].price + '</td>';
+                                content_html += '   <td class="text-right">' + coinType + '</td>';
+                                content_html += '   <td class="text-right">' + res.trans[i].coin_price + '</td>';
+                                content_html += '   <td class="text-right">' + res.trans[i].icoAmount + '</td>';
+                                content_html += '   <td class="text-right">' + res.trans[i].create_date.toLocaleString() + '</td>';
+                                content_html += '</tr>';
+                            }
+                            
+                            $('#blv_transaction_tbl tbody').html(content_html);
+                        }
+                    }
+                );
+            }
+        
+            function cryptic_highcharts(){	
+                $.post(
+                    "/getTradeInfo",
+                    function(res){
+                        if(res.status == "OK"){
+                            var blv_data = [];
+                            var btc_data = [];
+                            var eth_data = [];
+                            var dates = [];
+                            
+                            var btcusdRate = 0;
+
+                            for(var i = 0; i < res.blv.length; i++){
+                                dates.push(res.blv[i].date);
+                                blv_data.push(res.blv[i].amount);
+                                btc_data.push(res.btc[i].amount);
+                                eth_data.push(res.eth[i].amount);
+                            }
+
+                            drawChart(blv_data, btc_data, eth_data, dates);
+                        }
+                    }
+                );
+            }
+            
+            function drawChart(blv, btc, eth, dates){
+                if ($('#chart_btc').length) {   	    
+                    jQuery('#chart_btc').highcharts({	        
+                        title: {	            
+                            text: '',
+                            x: 0	        
+                        },	        
+                        subtitle: {	            
+                            text: '',	            
+                            x: 0	        
+                        },	        
+                        navigation: {	            
+                            buttonOptions: {	                
+                                enabled: false	            
+                            }	        
+                        },
+                        xAxis: {	            
+                            visible:false,	            
+                            enabled:false,	            
+                            categories: dates	        
+                        },	        
+                        yAxis: {	            
+                            visible:false,	            
+                            enabled:false,	 
+                        },	        
+                        tooltip: {	            
+                            borderColor: '#FFDD90',	            
+                            borderRadius: '3',	            
+                            borderWidth: '1',	            
+                            backgroundColor: '#FFFAD3',	            
+                            
+                        },	        
+                        legend: {	            
+                            enabled: false	        
+                        },	        
+                        credits: {	            
+                            enabled: false	        
+                        },
+                        series: [{
+                                name: 'Bitcoin',
+                                type: 'spline',	 
+                                marker:{
+                                    enabled: true
+                                },           
+                                data: btc
+                            }, {
+                                name: 'Ethereum',
+                                type: 'spline',	            
+                                marker:{
+                                    enabled: true
+                                },           
+                                data: eth
+                            }, {
+                                name: 'Blockvest',
+                                type: 'spline',	            
+                                marker:{
+                                    enabled: true
+                                },           
+                                data: blv
+                            }]	    
+                    });	
+                }
+            }
+        </script>
+    <% } %>
+
+    <script>
+
+        $('#btn_show_trans').click(function(){
+            location.href="/blvtransaction";
+        });
+
+        $('#btn_show_affiliate').click(function(){
+            location.href="/affiliate";
+        });
+    </script>
+</body>
+</html>

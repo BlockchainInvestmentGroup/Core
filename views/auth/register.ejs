@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="HTML,CSS,JavaScript">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/images/favicon.png" type="image/ico"/>
+    <title><%= title %> | Blockvest ICO</title>
+    <!-- CSS -->
+    <!-- Bootstrap -->
+    <link href="assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/select2/select2.min.css" rel="stylesheet">
+    <!-- Simple line icons -->
+    <link href="assets/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Font awesome icons -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Custom Style -->
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/mycss.css" rel="stylesheet">
+    <link href="assets/css/media.css" rel="stylesheet">
+    <link href="assets/css/skin-colors/skin-blue.css" rel="stylesheet">
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <style>
+        .input_field_caption{
+            position: absolute;
+            color: white!important;
+            font-size: 14px;
+            margin-top: -30px;
+            margin-left: -150px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body id="register-page" class="nav-md all-pages data_background preloader-off"
+      data-background="assets/images/dasbg1.jpg">
+<div class="spacer_80"></div>
+<div class="clearfix"></div>
+<div class="st-container st-effect">
+    <div class="block-page col-md-12 text-center">
+        <a href="http://blockvestico.io/"><img src="assets/images/blockvest-logo1.png" alt="blockvest-logo"></a>
+        <h3 class="text-white text-bold">Register For New Account</h3>
+        <form action="/register" method="POST">
+            <% if(error && error.length > 0){ %>
+                <div class="alert alert-danger" style="margin:0px 10px;">
+                    <%= error %>
+                </div>
+                    <% } else if(success && success.length > 0 ){ %>
+                <div class="alert alert-success" style="margin:0px 10px;">
+                    <%= success %>
+                </div>
+            <% } %>
+            <div class="row marginAuto">
+                <div class="row">
+                        <div class="first_section">
+                            <h4 class="text-white text-center">Enter Your Login Information</h4>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                
+                                <% if(locals.username){ %>
+                                    
+                                           <input name="username" value="<%= username %>" class="input__field input__field--akira" type="text" id="input-1" required/>
+                                <% }else{ %>
+                                    <input name="username" class="input__field input__field--akira" type="text" id="input-1" required/>
+                                <% } %>
+                                
+                                <label class="input__label input__label--akira" for="input-1">
+                                <span class="input__label-content input__label-content--akira">Username</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.sponsor){ %>
+                                    <input name="sponsor" value="<%= sponsor %>" class="input__field input__field--akira" type="text" id="input-2" readonly/>
+                                <% }else{ %>
+                                    <input name="sponsor" class="input__field input__field--akira" type="text" id="input-2" readonly/>
+                                <% } %>
+                                
+                                <label class="input__label input__label--akira" for="input-2">
+                                    <span class="input__label-content input__label-content--akira">Sponsor Username</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="container">
+                                    <div class="col-md-6">
+                                        <span class="input input--akira">
+                                            <% if(locals.email){ %>
+                                                <input name="email" value="<%= email %>" class="input__field input__field--akira" type="email" id="input-3"/>
+                                            <% }else{ %>
+                                                <input name="email" class="input__field input__field--akira" type="email" id="input-3"/>
+                                            <% } %>
+                                            <label class="input__label input__label--akira" for="input-3">
+                                                <span class="input__label-content input__label-content--akira">Email</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="second_section">
+                            <h4 class="text-white text-center">Enter Password</h4>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <input name="password" class="input__field input__field--akira" type="password" id="input-4" required/>
+                                <label class="input__label input__label--akira" for="input-4">
+                                <span class="input__label-content input__label-content--akira">Password</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <input name="confirm_password" class="input__field input__field--akira" type="password" id="input-5" required/>
+                                <label class="input__label input__label--akira" for="input-5">
+                                <span class="input__label-content input__label-content--akira">Confirm password</span>
+                                </label>
+                            </span>
+                            </div>
+                        </div>
+                
+                </div>
+                
+                    <div class="row">
+                        <div class="third_section">
+                            <h4 class="text-white text-center">Enter KYC Information</h4>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.first_name){ %>
+                                    <input name="first_name" value="<%= first_name %>" class="input__field input__field--akira" type="text" id="input-6" required/>
+                                <% }else{ %>
+                                    <input name="first_name" class="input__field input__field--akira" type="text" id="input-6" required/>
+                                <% } %>
+                                <label class="input__label input__label--akira" for="input-6">
+                                <span class="input__label-content input__label-content--akira">First Name</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.last_name){ %>
+                                    <input name="last_name" value="<%= last_name %>" class="input__field input__field--akira" type="text" id="input-7" required/>
+                                <% }else{ %>
+                                    <input name="last_name" class="input__field input__field--akira" type="text" id="input-7" required/>
+                                <% } %>
+                                <label class="input__label input__label--akira" for="input-7">
+                                <span class="input__label-content input__label-content--akira">Last Name</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.street){ %>
+                                    <input name="street" value="<%= street %>" class="input__field input__field--akira" type="text" id="input-8" required/>
+                                <% }else{ %>
+                                    <input name="street" class="input__field input__field--akira" type="text" id="input-8" required/>
+                                <% } %>
+                                <label class="input__label input__label--akira" for="input-8">
+                                <span class="input__label-content input__label-content--akira">Street</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.city){ %>
+                                    <input name="city" value="<%= city %>" class="input__field input__field--akira" type="text" id="input-9" required/>
+                                <% }else{ %>
+                                    <input name="city" class="input__field input__field--akira" type="text" id="input-9" required/>
+                                <% } %>
+                                <label class="input__label input__label--akira" for="input-9">
+                                    <span class="input__label-content input__label-content--akira">City</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.state){ %>
+                                    <input name="state" value="<%= state %>" class="input__field input__field--akira" type="text" id="input-10" required/>
+                                <% }else{ %>
+                                    <input name="state" class="input__field input__field--akira" type="text" id="input-10" required/>
+                                <% } %>
+                                <label class="input__label input__label--akira" for="input-10">
+                                    <span class="input__label-content input__label-content--akira">State</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            <span class="input input--akira">
+                                <% if(locals.post_code){ %>
+                                    <input name="post_code" value="<%= post_code %>" class="input__field input__field--akira" type="text" id="input-11" />
+                                <% }else{ %>
+                                    <input name="post_code" class="input__field input__field--akira" type="text" id="input-11" />
+                                <% } %>
+                                <label class="input__label input__label--akira" for="input-11">
+                                    <span class="input__label-content input__label-content--akira">Post Code</span>
+                                </label>
+                            </span>
+                            </div>
+                            <div class="col-md-6">
+                            
+                                    <h5 class="text-center text-white">Country of Residence</h5>
+                                    <div class="dropdownselect marginAuto">
+                                            <select name="residence" id="input-12" editable required>
+                                                    <option value="" disabled selected>Select Country</option>
+                                                    <% for( var i =0; i < countries.length; i++){ %>
+                                                        <% if(locals.residence){ %>
+                                                            <% if(locals.residence == countries[i].name){ %>
+                                                                <option value="<%= countries[i].name %>" selected><%= countries[i].name %></option>
+                                                            <% }else{ %>
+                                                                <option value="<%= countries[i].name %>"><%= countries[i].name %></option>
+                                                            <% } %>
+                                                        <% }else{ %>
+                                                            <option value="<%= countries[i].name %>"><%= countries[i].name %></option>
+                                                        <% } %>
+                                                    <% } %>
+                                            </select>
+                                          </div>
+
+                                <!-- <label class="input__label input__label--akira" for="input-12">
+                                <span class="input__label-content input__label-content--akira">&nbsp</span>
+                                </label> -->
+                            
+                            </div>
+                            <div class="col-md-6">
+                                
+                            
+                                <h5 class="text-center text-white">Country of Citizenship</h5>
+                                <div class="dropdownselect marginAuto">
+                                        <select name="citizenship" id="input-13" editable required>
+                                                <option value="" disabled selected>Select Country</option>
+                                                <% for( var i =0; i < countries.length; i++){ %>
+                                                    <% if(locals.citizenship){ %>
+                                                        <% if(locals.citizenship == countries[i].name){ %>
+                                                            <option value="<%= countries[i].name %>" selected><%= countries[i].name %></option>
+                                                        <% }else{ %>
+                                                            <option value="<%= countries[i].name %>"><%= countries[i].name %></option>
+                                                        <% } %>
+                                                    <% }else{ %>
+                                                        <option value="<%= countries[i].name %>"><%= countries[i].name %></option>
+                                                    <% } %>
+                                                <% } %>
+                                        </select>
+                                      </div>
+                              
+                                
+                            
+                            </div>
+                        </div>   
+                    </div>
+                
+            </div>
+            <div class="col-md-12 margin-top30">
+                <div class="register-check">
+                    <input type="checkbox" id="chk_agree" name="terms" value="terms" checked required/>
+                    <label for="chk_agree" class="text-white text-center"><span></span><a href="https://blockvestico.io/terms-and-conditions/">Accept terms & conditions</a></label>
+                </div>
+            </div>
+            <button class="btn btn-white margin-top" type="submit" value="create an account">
+                <i class="glyphicon glyphicon-play-circle"></i>Create an Account
+            </button>
+        </form>
+        <p class="text-white">or <a href="/login" class="text-bold">Login</a></p>
+    </div>
+    <!-- JS SCRIPTS -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollbar.min.js"></script>
+    <script src="assets/plugins/modernizr/modernizr.custom.js"></script>
+    <script src="assets/plugins/classie/classie.js"></script>
+    <script src="assets/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/plugins/select2/select2.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/js/custom.min.js"></script>
+    <script src="assets/js/preloader.min.js"></script>
+</div>
+</body>
+</html>

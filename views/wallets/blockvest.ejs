@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ../layouts/header.ejs %>
+<body class="nav-md preloader-off">
+    <div class="pace-cover"></div>
+    <div id="st-container" class="st-container st-effect">
+        <!-- MAIN PAGE CONTAINER -->
+        <div class="container body">
+            <div class="main_container">
+
+                <%- include ../layouts/sidebar.ejs %>
+
+                <!-- PAGE CONTENT -->
+                <div class="right_col no-padding" role="main">
+                        <div class="data_background text-center"  data-background='assets/images/dasbg1.jpg'>
+                            <div class="background-opacity">
+                            <div class="spacer_30"></div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-9 marginAuto">
+                    <div class="header-title-breadcrumb element-box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-6 col-xs-12 text-left">
+                                    <h3>My Wallet</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-section1">
+                        
+                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                            <div class="panel-body">
+                                <% if(role == "customer") { %> 
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                            <div class="panel-heading">
+                                                <h3 class="no-margin">Blockvest wallet</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <h4>Balance: <span id="balance_blv_available">0.0</span></h4> 
+                                                <h4>Pending: <span id="balance_blv_pending">0.0</span></h4>
+                                                <div class="small-button" style="text-align:center">
+                                                    <!-- <button class="btn btn-blue" data-toggle="modal" data-target="#blv_depsite">Deposit</button> -->
+                                                    <% if((common.ico_activation == false && userinfo.secret != "") || (role == "SuperAdmin")){ %>
+                                                        <button class="btn btn-blue" data-toggle="modal" data-target="#blv_withdraw">withdraw</button>
+                                                    <% } %>
+                                                </div>
+                                            </div><!-- END panel-body -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Modal -->
+                                    <div id="blv_depsite" class="modal fade" role="dialog">
+                                        <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                            <!-- Modal content-->
+                                            <div class="modal-content" style="border-radius:6px;">
+                                                <div class="modal-title">
+                                                    <span>Deposit Blockvest</span>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <div class="clearfix seperate-line"></div>
+                                                </div>
+                                                <!-- <div class="modal-body"> -->
+                                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                        <form>
+                                                            <div id="blv_deposit_error" class="error-message"></div>
+                                                            <div id="blv_deposit_success" class="success-message"></div>
+                                                            <div class="form-group" style="text-align: center;">
+                                                                <label>Blockvest Address</label><br>
+                                                                <img src="<%= blv_qrcode_url %>"/>
+                                                                <label style="font-size: 12px;"><%= userinfo.blvAddress %></label>
+                                                            </div>
+                                                            <div style="padding:10px">
+                                                                <span>Amount</span>
+                                                                <input id="blv_deposit_amount" class="form-control" type="text" name="amount" placeholder="Enter Amount">
+                                                                <span>Transaction ID</span>
+                                                                <input id="blv_deposit_txid" class="form-control" type="text" name="txid" placeholder="Enter transaction id">
+                                                                <span>2FA token</span>
+                                                                <input id="blv_deposit_token" class="form-control" type="text" name="token" placeholder="Enter 2FA token">
+                                                            </div>
+                                                            <div style="text-align:right;padding:10px 20px;">
+                                                                <input id="btn_blv_deposit" class="btn-green" type="button" value="Receive">
+                                                                <input class="btn-green" type="button" value="Close" data-dismiss="modal">
+                                                            </div>
+                                                    </form>
+                                                    <!-- </div> -->
+                                                        
+                                                </div>
+                                            </div>
+                                            <!-- Modal content-->
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    
+                                    <!-- Modal -->
+                                    <div id="blv_withdraw" class="modal fade" role="dialog">
+                                        <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                            <!-- Modal content-->
+                                            <div class="modal-content" style="border-radius:6px;">
+                                                <div class="modal-title">
+                                                    <span>Withdraw Blockvest</span>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <div class="clearfix seperate-line"></div>
+                                                </div>
+                                                <!-- <div class="modal-body"> -->
+                                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                        <form>
+                                                            <div id="blv_withdraw_error" class="error-message"></div>
+                                                            <div id="blv_withdraw_success" class="success-message"></div>
+                                                            <div style="padding:10px">
+                                                                <span>Address</span>
+                                                                <input id="blv_withdraw_addr" class="form-control" type="text" name="address" placeholder="Enter a receiver address">
+                                                                <span>Amount</span>
+                                                                <input id="blv_withdraw_amount" class="form-control" type="text" name="amount" placeholder="Enter amount of blockvest">
+                                                                <span>2FA token</span>
+                                                                <input id="blv_withdraw_token" class="form-control" type="text" name="token" placeholder="Enter 2FA token">
+                                                            </div>
+                                                            <div style="text-align:right;padding:10px 20px;">
+                                                                <input id="btn_blv_withdraw" class="btn-green" type="button" value="withdraw">
+                                                                <input class="btn-green" type="button" value="Close"  data-dismiss="modal">
+                                                            </div>
+                                                    </form>
+                                                    <!-- </div> -->
+                                                        
+                                                </div>
+                                            </div>
+                                            <!-- Modal content-->
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                <% } %>
+                                <% if( role == "SuperAdmin"){ %>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                            <div class="panel-heading">
+                                                <h3 class="no-margin">Bitcoin wallet</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <h4>Balance: <span id="balance_btc_available">0.00000000</span></h4> 
+                                                <h4>Pending: <span id="balance_btc_pending">0.00000000</span></h4>
+                                                <div class="small-button text-center col-md-6 col-md-offset-3">
+                                                        <div class="button-left"><button class="btn btn-blue" data-toggle="modal" data-target="#btc_depsite">Deposit</button></div>
+                                                            <div class="col-md-7"><button class="btn btn-blue" data-toggle="modal" data-target="#btc_withdraw">withdraw</button></div>
+                                                </div>
+                                            </div><!-- END panel-body -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Modal -->
+                                    <div id="btc_depsite" class="modal fade" role="dialog">
+                                        <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                            <!-- Modal content-->
+                                            <div class="modal-content" style="border-radius:6px;">
+                                                <div class="modal-title">
+                                                    <span>Deposit Bitcoin</span>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <div class="clearfix seperate-line"></div>
+                                                </div>
+                                                <!-- <div class="modal-body"> -->
+                                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                        <form>
+                                                            <div id="btc_deposit_error" class="error-message"></div>
+                                                            <div id="btc_deposit_success" class="success-message"></div>
+                                                            <div class="form-group" style="text-align: center;">
+                                                                <label>Bitcoin Address</label><br>
+                                                                <img src="<%= btc_qrcode_url %>"/>
+                                                                <label style="font-size: 12px;"><%= userinfo.btcAddress %></label>
+                                                            </div>
+                                                            <div style="padding:10px">
+                                                                <span>Amount</span>
+                                                                <input id="btc_deposit_amount" class="form-control" type="text" name="amount" placeholder="Enter Amount">
+                                                                <span>Transaction ID</span>
+                                                                <input id="btc_deposit_txid" class="form-control" type="text" name="txid" placeholder="Enter transaction id">
+                                                                <span>2FA token</span>
+                                                                <input id="btc_deposit_token" class="form-control" type="text" name="token" placeholder="Enter 2FA token">
+                                                            </div>
+                                                            <div style="text-align:right;padding:10px 20px;">
+                                                                <input id="btn_btc_deposit" class="btn-green" type="button" value="Receive">
+                                                                <input class="btn-green" type="button" value="Close" data-dismiss="modal">
+                                                            </div>
+                                                    </form>
+                                                    <!-- </div> -->
+                                                        
+                                                </div>
+                                            </div>
+                                            <!-- Modal content-->
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    
+                                    <!-- Modal -->
+                                    <div id="btc_withdraw" class="modal fade" role="dialog">
+                                        <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                            <!-- Modal content-->
+                                            <div class="modal-content" style="border-radius:6px;">
+                                                <div class="modal-title">
+                                                    <span>Withdraw Blockvest</span>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <div class="clearfix seperate-line"></div>
+                                                </div>
+                                                <!-- <div class="modal-body"> -->
+                                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                        <form>
+                                                            <div id="btc_withdraw_error" class="error-message"></div>
+                                                            <div id="btc_withdraw_success" class="success-message"></div>
+                                                            <div style="padding:10px">
+                                                                <span>Address</span>
+                                                                <input id="btc_withdraw_addr" class="form-control" type="text" name="address" placeholder="Enter a receiver address">
+                                                                <span>Amount</span>
+                                                                <input id="btc_withdraw_amount" class="form-control" type="text" name="amount" placeholder="Enter amount of blockvest">
+                                                                <span>2FA token</span>
+                                                                <input id="btc_withdraw_token" class="form-control" type="text" name="token" placeholder="Enter 2FA token">
+                                                            </div>
+                                                            <div style="text-align:right;padding:10px 20px;">
+                                                                <input id="btn_btc_withdraw" class="btn-green" type="button" value="withdraw">
+                                                                <input class="btn-green" type="button" value="Close"  data-dismiss="modal">
+                                                            </div>
+                                                    </form>
+                                                    <!-- </div> -->
+                                                        
+                                                </div>
+                                            </div>
+                                            <!-- Modal content-->
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    
+                                <% } %>
+
+                                <% if( role == "SuperAdmin"){ %>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                            <div class="panel-heading">
+                                                <h3 class="no-margin">Ethereum wallet</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <h4>Balance: <span id="balance_eth_available">0.00000000</span></h4> 
+                                                <h4>Pending: <span id="balance_eth_pending">0.00000000</span></h4>
+                                                <div class="small-button" style="text-align:center">
+                                                    <button class="btn btn-blue" data-toggle="modal" data-target="#eth_depsite">Deposit</button>
+                                                </div>
+                                            </div><!-- END panel-body -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Modal -->
+                                    <div id="eth_depsite" class="modal fade" role="dialog">
+                                        <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                            <!-- Modal content-->
+                                            <div class="modal-content" style="border-radius:6px;">
+                                                <div class="modal-title">
+                                                    <span>Deposit Ethereum</span>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <div class="clearfix seperate-line"></div>
+                                                </div>
+                                                <!-- <div class="modal-body"> -->
+                                                    <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                        <form>
+                                                            <div id="eth_deposit_error" class="error-message"></div>
+                                                            <div id="eth_deposit_success" class="success-message"></div>
+                                                            <div class="form-group" style="text-align: center;">
+                                                                <label>Ethereum Address</label><br>
+                                                                <img src="<%= eth_qrcode_url %>"/>
+                                                                <label style="font-size: 12px;"><%= userinfo.eoaAddress %></label>
+                                                            </div>
+                                                            <div style="padding:10px">
+                                                                <span>Amount</span>
+                                                                <input id="eth_deposit_amount" class="form-control" type="text" name="amount" placeholder="Enter Amount">
+                                                                <span>Transaction ID</span>
+                                                                <input id="eth_deposit_txid" class="form-control" type="text" name="txid" placeholder="Enter transaction id">
+                                                                <span>2FA token</span>
+                                                                <input id="eth_deposit_token" class="form-control" type="text" name="token" placeholder="Enter 2FA token">
+                                                            </div>
+                                                            <div style="text-align:right;padding:10px 20px;">
+                                                                <input id="btn_eth_deposit" class="btn-green" type="button" value="Receive">
+                                                                <input class="btn-green" type="button" value="Close" data-dismiss="modal">
+                                                            </div>
+                                                    </form>
+                                                    <!-- </div> -->
+                                                        
+                                                </div>
+                                            </div>
+                                            <!-- Modal content-->
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                <% } %>
+
+                            </div>
+                        </div>
+                        
+
+                        <% if(role == "SuperAdmin") { %>
+                            <div class="panel panel-default table-market-capitalization">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Withdraw Ethereum</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-cryptic dataTable no-footer" id="eth_withdraw_tbl" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="text-right">No</th>
+                                                <th class="text-right">Ethereum Address<i class="fa fa-sort"></i></th>
+                                                <th class="text-right">Balance <i class="fa fa-sort"></i></th>
+                                                <th style="width:120px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for( var i = 0; i < eth_account_list.length; i++){ %>
+                                                <tr>
+                                                    <td class="text-right"><%= i+1 %></td>
+                                                    <td class="text-right"><%= eth_account_list[i].addr %></td>
+                                                    <td class="text-right"><%= eth_account_list[i].balance %></td>
+                                                    <td class="text-right" style="width:120px;">
+                                                        <% if(parseFloat(eth_account_list[i].balance) >= 0.01) {%>
+                                                            <input id="eth_withdraw_<%= i %>" type="button" class="btn-green" value="withdraw" onclick="withdrawETH('<%= eth_account_list[i].addr %>')">
+                                                        <% } %>
+                                                    </td>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div id="eth_withdraw" class="modal fade" role="dialog">
+                                <div class="modal-dialog" style="width:350px; top:20%; margin:auto">
+                                    <!-- Modal content-->
+                                    <div class="modal-content" style="border-radius:6px;">
+                                        <div class="modal-title">
+                                            <span>Withdraw Ethereum</span>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <div class="clearfix seperate-line"></div>
+                                        </div>
+                                        <!-- <div class="modal-body"> -->
+                                            <div class="panel panel-warning panel-cryptic element-box-shadow">
+                                                <form>
+                                                    <div id="eth_withdraw_error" class="error-message"></div>
+                                                    <div id="eth_withdraw_success" class="success-message"></div>
+                                                    <div style="padding:10px">
+                                                        <input type="hidden" id="eth_withdraw_fromAddr">
+                                                        <span>Address</span>
+                                                        <input id="eth_withdraw_addr" class="form-control" type="text" name="address" placeholder="Enter a receiver address">
+                                                        <span>Amount</span>
+                                                        <input id="eth_withdraw_amount" class="form-control" type="text" name="amount" placeholder="Enter amount of blockvest">
+                                                        <span>2FA token</span>
+                                                        <input id="eth_withdraw_token" class="form-control" type="text" name="token" placeholder="Enter 2FA token">
+                                                    </div>
+                                                    <div style="text-align:right;padding:10px 20px;">
+                                                        <input id="btn_eth_withdraw" class="btn-green" type="button" value="withdraw">
+                                                        <input class="btn-green" type="button" value="Close"  data-dismiss="modal">
+                                                    </div>
+                                            </form>
+                                            <!-- </div> -->
+                                                
+                                        </div>
+                                    </div>
+                                    <!-- Modal content-->
+                                </div>
+                            </div>
+                            <!-- Modal -->
+
+                        <% } %>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                <a href="#" class="scrollToTop"><i class="fa fa-chevron-up text-white" aria-hidden="true"></i></a>
+                <!-- PAGE FOOTER -->
+                
+          </div>
+        </div>
+    </div>
+
+    <%- include ../layouts/footer.ejs %>
+    <script>
+        $('#btn_blv_withdraw').click(function(){
+            var blv = $('#blv_withdraw_amount').val();
+            var addr = $('#blv_withdraw_addr').val().trim();
+            var token = $('#blv_withdraw_token').val().trim();
+            var username = '<%= userinfo.username %>';
+            blv = parseInt(parseFloat(blv) * 10);
+            blv = blv / 10;
+            if(blv <= 0){
+                showMessage("blv_withdraw", 0, "Please input amount correctly.");
+                return;
+            }
+
+            blv = blv.toString();
+
+            if(blv == "" || addr == "" || token == ""){
+                showMessage("blv_withdraw", 0, "Please fill all fields.");
+                return;
+            }
+            
+            $('#blv_withdraw_token').val('');
+            var ajax_url = "/withdrawBLV";
+            $.post(
+                ajax_url,
+                {
+                    amount: blv,
+                    toAddr: addr,
+                    token: token,
+                    username: username,
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("blv_withdraw", 1, res.message);
+                    }else{
+                        showMessage("blv_withdraw", 0, res.message);
+
+                    }
+                }
+            );
+
+        });
+        $('#btn_blv_deposit').click(function(){
+            var blv = $('#blv_deposit_amount').val();
+            var txid = $('#blv_deposit_txid').val().trim();
+            var token = $('#blv_deposit_token').val().trim();
+            var username = '<%= userinfo.username %>';
+            blv = parseInt(parseFloat(blv) * 10);
+            blv = blv / 10;
+            if(blv <= 0){
+                showMessage("blv_deposit", 0, "Please input amount correctly.");
+                return;
+            }
+            blv = blv.toString();
+
+            if(blv == "" || txid == "" || token == ""){
+                showMessage("blv_deposit", 0, "Please fill all fields.");
+                return;
+            }
+
+            $('#blv_deposit_token').val('');
+            var ajax_url = "/depositBLV";
+            $.post(
+                ajax_url,
+                {
+                    blv: blv,
+                    txid: txid,
+                    token: token,
+                    username: username,
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("blv_deposit", 1, res.message);
+                    }else{
+                        showMessage("blv_deposit", 0, res.message);
+
+                    }
+                }
+            );
+
+        });
+
+        $('#btn_btc_deposit').click(function(){
+            var btc = $('#btc_deposit_amount').val();
+            var txid = $('#btc_deposit_txid').val().trim();
+            var token = $('#btc_deposit_token').val().trim();
+            var username = '<%= userinfo.username %>';
+            btc = parseInt(parseFloat(btc) * 100000000);
+            btc = btc / 100000000;
+            if(btc <= 0){
+                showMessage("btc_deposit", 0, "Please input amount correctly.");
+                return;
+            }
+            btc = btc.toString();
+
+            if(btc == "" || txid == "" || token == ""){
+                showMessage("btc_deposit", 0, "Please fill all fields.");
+                return;
+            }
+
+            $('#btc_deposit_token').val('');
+            var ajax_url = "/depositBTC";
+            $.post(
+                ajax_url,
+                {
+                    btc: btc,
+                    txid: txid,
+                    token: token,
+                    username: username,
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("btc_deposit", 1, res.message);
+                    }else{
+                        showMessage("btc_deposit", 0, res.message);
+
+                    }
+                }
+            );
+
+        });
+        $('#btn_btc_withdraw').click(function(){
+            var btc = $('#btc_withdraw_amount').val();
+            var addr = $('#btc_withdraw_addr').val().trim();
+            var token = $('#btc_withdraw_token').val().trim();
+            var username = '<%= userinfo.username %>';
+            btc = parseInt(parseFloat(btc) * 100000000);
+            btc = btc / 100000000;
+            if(btc <= 0){
+                showMessage("btc_withdraw", 0, "Please input amount correctly.");
+                return;
+            }
+            btc = btc.toString();
+
+
+            if(btc == "" || addr == "" || token == ""){
+                showMessage("btc_withdraw", 0, "Please fill all fields.");
+                return;
+            }
+
+            $('#btc_withdraw_token').val('');
+            var ajax_url = "/withdrawBTC";
+            $.post(
+                ajax_url,
+                {
+                    amount: btc,
+                    toAddr: addr,
+                    token: token,
+                    username: username,
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("btc_withdraw", 1, res.message);
+                    }else{
+                        showMessage("btc_withdraw", 0, res.message);
+
+                    }
+                }
+            );
+
+        });
+
+        $('#btn_eth_deposit').click(function(){
+            var eth = $('#eth_deposit_amount').val();
+            var txid = $('#eth_deposit_txid').val().trim();
+            var token = $('#eth_deposit_token').val().trim();
+            var username = '<%= userinfo.username %>';
+            eth = parseInt(parseFloat(eth) * 100000000);
+            eth = eth / 100000000;
+            if(eth <= 0){
+                showMessage("eth_deposit", 0, "Please input amount correctly.");
+                return;
+            }
+            eth = eth.toString();
+
+            if(eth == "" || txid == "" || token == ""){
+                showMessage("eth_deposit", 0, "Please fill all fields.");
+                return;
+            }
+
+            $('#eth_deposit_token').val('');
+            var ajax_url = "/depositETH";
+            $.post(
+                ajax_url,
+                {
+                    eth: eth,
+                    txid: txid,
+                    token: token,
+                    username: username,
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("eth_deposit", 1, res.message);
+                    }else{
+                        showMessage("eth_deposit", 0, res.message);
+
+                    }
+                }
+            );
+
+        });
+        $('#btn_eth_withdraw').click(function(){
+            var eth = $('#eth_withdraw_amount').val();
+            var addr = $('#eth_withdraw_addr').val().trim();
+            var token = $('#eth_withdraw_token').val().trim();
+            var fromAddr = $('#eth_withdraw_fromAddr').val().trim();
+            var username = '<%= userinfo.username %>';
+
+            eth = parseInt(parseFloat(eth) * 100000000);
+            eth = eth / 100000000;
+            if(eth <= 0){
+                showMessage("eth_withdraw", 0, "Please input amount correctly.");
+                return;
+            }
+            eth = eth.toString();
+
+            if(eth == "" || addr == "" || token == ""){
+                showMessage("eth_withdraw", 0, "Please fill all fields.");
+                return;
+            }
+
+            $('#eth_withdraw_token').val('');
+            var ajax_url = "/withdrawETH";
+            $.post(
+                ajax_url,
+                {
+                    amount: eth,
+                    fromAddr: fromAddr,
+                    toAddr: addr,
+                    token: token,
+                    username: username,
+                },
+                function(res){
+                    console.log(res);
+                    if(res.status = "success"){
+                        getPending();
+                        showMessage("eth_withdraw", 1, res.message);
+                    }else{
+                        showMessage("eth_withdraw", 0, res.message);
+
+                    }
+                }
+            );
+
+        });
+       
+        $('#copy_btc_addr').click(function(){
+            /* Get the text field */
+            var copyText = document.getElementById("btc_addr");
+
+            copyTextToClipboard(copyText.value);
+        });
+        $('#copy_eth_addr').click(function(){
+            /* Get the text field */
+            var copyText = document.getElementById("eth_addr");
+
+            copyTextToClipboard(copyText.value);
+        });
+
+        jQuery('#eth_withdraw_tbl').DataTable( {
+            "pageLength": 20
+        });
+
+        function showMessage(part, type, message){
+            if(type==1){
+                $('#' + part + '_success').html(message);
+                $('#' + part + '_error').html("");
+            }else{
+                $('#' + part + '_error').html(message);
+                $('#' + part + '_success').html("");
+            }
+
+            setTimeout(function(){
+                $('#' + part + '_success').html("");
+                $('#' + part + '_error').html("");
+            }, 20000);
+        }
+
+        function withdrawETH(fromAddr){
+            $('#eth_withdraw_fromAddr').val(fromAddr);
+            $('#eth_withdraw').modal();
+        }
+    </script>
+</body>
+</html>
